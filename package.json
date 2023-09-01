@@ -12,8 +12,9 @@
   "dependencies": {
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "nodemon": "^3.0.1",
-    "pakt-sdk": "^0.1.7",
+    "pakt-sdk": "^0.1.11",
     "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
   },
