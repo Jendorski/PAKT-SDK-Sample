@@ -19,6 +19,54 @@ export const createCollection = async ({
   payload: CreateCollectionDto;
 }) => {
   try {
+    /**
+     * Creating a sample payload for a Collection.
+     * The context for the Collection is for a job, to create a server-side application, the logged in user creating this is the creator.
+     * The type is therefore marked as a job.
+     *
+     * Note that the type can be defined as desired by the creator
+     */
+    const jobPayload: CreateCollectionDto = {
+      type: "job",
+      category: "backend",
+      name: "Food App Backend Application",
+      isPrivate: true,
+      description:
+        "This Collection is being created to store the details of a job, to develop a backend for a food app",
+      tags: ["Node.JS", "Typescript"],
+      deliveryDate: "2023-12-12",
+      attachments: [], //attachments are the id of the files or documents uploaded with respect to this collection it can be left empty, if no files were uploaded
+    };
+
+    /**
+     * Another Sample payload for a collection
+     * The context for this Collection is to store the record for a football game score
+     */
+    const footballResultPayload: CreateCollectionDto = {
+      type: "football",
+      category: "match_report", //there could also be stats as category
+      name: "Barcelona vs Real Madrid CF 20-10-2023 Match Report",
+      isPrivate: false,
+      description:
+        "The match report of the El Clasico game between Spanish football giants, Barcelona & Real Madrid CF",
+      tags: ["Barcelona", "Real Madrid CF", "El Clasico"],
+      deliveryDate: "20-10-2023",
+      attachments: ["6108738274389283"], // Sample file upload Id of the game highlights
+    };
+
+    /**
+     * Another Sample Payload for a Collection
+     * The context for this Collection is to store the different types of shoes for a cobbler
+     */
+    const shoesPayload: CreateCollectionDto = {
+      type: "Shoes",
+      category: "men_shoes",
+      name: "Collection",
+      isPrivate: true,
+      description: "Collection of Shoes for XYZ Shoes Inc.",
+      tags: ["shoes", "slippers", "palm_sandals", "flip_flop"],
+    };
+
     const create: ResponseDto<ICollectionDto> = await init.collection.create(
       payload
     );

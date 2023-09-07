@@ -71,7 +71,12 @@ export const getAllInvites = async (
   filter: Record<string, any> | IInviteDto
 ) => {
   try {
-    const gets = await init.invite.getAll(filter);
+    const newFilter = {
+      sender: "12345678909",
+      reciever: "12345678909",
+      status: "pending",
+    };
+    const gets = await init.invite.getAll(newFilter);
     if (gets.status === Status.ERROR)
       return internalResponse(
         true,

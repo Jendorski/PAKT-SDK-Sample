@@ -4,10 +4,10 @@ import { internalResponse } from "../utils";
 export const updateConnectionFilter = async () => {
   try {
     const payload: IConnectionFilter = {
-      event: "CREATE_CONVERSATION",
-      key: "afroScore",
-      value: 60,
-      decider: "greater_than",
+      event: "CREATE_CONVERSATION", // CREATE_JOB, ASSIGN_JOB, CREATE_CONVERSATION
+      key: "tagCount", //afroScore, tagCount, tags
+      value: 12,
+      decider: "less_than", //contains, between, greater_than, equal_to, less_than
     };
 
     const upd = await init.connectionFilter.update(payload);
