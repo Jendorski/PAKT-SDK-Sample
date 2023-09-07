@@ -89,12 +89,38 @@ export const createCollection = async ({
   }
 };
 
+/**To create many collections, the parent collection id is needed
+ *
+ */
 export const createMany = async ({
   collections,
 }: {
   collections: CreateManyCollectionDto;
 }) => {
   try {
+    /**
+     * A sample collections payload, for shoes
+     */
+    const manyShoesPayload: CreateManyCollectionDto = {
+      parent: "6193848473827204048738", //the parent collection id
+      type: "Shoes",
+      collections: [
+        {
+          category: "men_shoes",
+          tags: ["suede"],
+          name: "Suede Shoe A",
+          description: "This is suede shoe a, it sells for $500",
+          isPrivate: true,
+        },
+        {
+          category: "men_shoes",
+          tags: ["flip_flop"],
+          name: "Men's Flip Flop",
+          description: "This is flip-flop sandal, it costs $200",
+          isPrivate: true,
+        },
+      ],
+    };
     const many: ResponseDto<ICollectionDto[]> =
       await init.collection.createMany(collections);
     if (many.status === Status.ERROR)
