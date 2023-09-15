@@ -156,6 +156,28 @@ export const deactivateTwoFA = async (code: string) => {
   }
 };
 
+export const sendEmailTwoFA = async () => {
+  try {
+    const sendEmailTwoFA = await init.account.sendEmailTwoFA();
+    if (sendEmailTwoFA.status === Status.ERROR)
+      return internalResponse(
+        true,
+        Number(sendEmailTwoFA.code ?? sendEmailTwoFA.statusCode),
+        String(sendEmailTwoFA.message),
+        sendEmailTwoFA
+      );
+    return internalResponse(
+      false,
+      Number(sendEmailTwoFA.code ?? sendEmailTwoFA.statusCode),
+      String(sendEmailTwoFA.message),
+      sendEmailTwoFA
+    );
+  } catch (error: Error | unknown) {
+    console.error(`${TAG}::sendEmailTwoFA${String(error)}`);
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
 export const logout = async () => {
   try {
     const logUserOut = await init.account.logout();

@@ -14,7 +14,8 @@ export const addReview = async ({ review }: { review: AddReviewDto }) => {
     const sampleReview: AddReviewDto = {
       review: "Excellent work done",
       rating: 5,
-      collection: "64fa1d5f64d7ee50b86ce6d0",
+      collectionId: "64fa1d5f64d7ee50b86ce6d0",
+      receiver: "64ff1592db081228cc9bdafd",
     };
     const add = await init.review.addReview(review);
     if (add.status === Status.ERROR)
@@ -43,7 +44,7 @@ export const viewAllReviews = async ({
 }) => {
   try {
     const reviews: ResponseDto<FindReviewDto> = await init.review.viewAll(
-      filter
+      filter ?? {}
     );
     if (reviews.status === Status.ERROR)
       return internalResponse(

@@ -197,6 +197,19 @@ export const updateCollection = async (
   payload: UpdateCollectionDto
 ) => {
   try {
+    const samplePayload: UpdateCollectionDto = {
+      type: "job",
+      name: "Sample Update",
+      description: "This is a sample update of a collection",
+      isPrivate: false,
+      category: "sample_update",
+      deliveryDate: "2023-11-17T12:53:40.718Z",
+      tags: ["tag_one", "tag_two"],
+      deliverables: ["update one", "update two"],
+      parent: "650026e1f4542241c4f6fe11", //if the collection is part of a parent, then the id of the collection
+      image: "https://file_uploaded_image_url",
+      staus: "ongoing", //or anyone based on the ICollectionStatus
+    };
     const update = await init.collection.updateCollection(id, payload);
     if (update.status === Status.ERROR)
       return internalResponse(
