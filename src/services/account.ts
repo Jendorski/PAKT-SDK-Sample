@@ -90,6 +90,29 @@ export const getUser = async () => {
   }
 };
 
+export const getUsers = async () => {
+  try {
+    const filter = {};
+    const users = await init.account.getUsers(filter);
+    if (users.status === Status.ERROR)
+      return internalResponse(
+        true,
+        Number(users.code ?? users.statusCode),
+        String(users.message),
+        users
+      );
+    return internalResponse(
+      false,
+      Number(users.code ?? users.statusCode),
+      String(users.message),
+      users
+    );
+  } catch (error: Error | unknown) {
+    console.error(`${TAG}::${String(error)}`, null);
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
 export const initiateTwoFA = async (type: TwoFATypeDto) => {
   try {
     const initiate = await init.account.initate2FA(type);
