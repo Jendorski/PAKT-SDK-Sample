@@ -1,4 +1,5 @@
 import {
+  FindUsers,
   IUser,
   ResponseDto,
   Status,
@@ -90,10 +91,32 @@ export const getUser = async () => {
   }
 };
 
+export const getAUser = async (userId: string) => {
+  try {
+    const get: ResponseDto<IUser> = await init.account.getAUser(userId);
+    if (get.status === Status.ERROR)
+      return internalResponse(
+        true,
+        Number(get.code ?? get.statusCode),
+        String(get.message),
+        get
+      );
+    return internalResponse(
+      false,
+      Number(get.code ?? get.statusCode),
+      String(get.message),
+      get
+    );
+  } catch (error: Error | unknown) {
+    console.error(`${TAG}::${String(error)}`);
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
 export const getUsers = async () => {
   try {
     const filter = {};
-    const users = await init.account.getUsers(filter);
+    const users: ResponseDto<FindUsers> = await init.account.getUsers(filter);
     if (users.status === Status.ERROR)
       return internalResponse(
         true,
