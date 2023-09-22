@@ -22,11 +22,16 @@ export const registration = async ({
   password: string;
 }) => {
   try {
-    const register: ResponseDto<RegisterDto> = await global.init.auth.register(
-      firstName,
-      lastName,
-      email,
-      password
+    const payload = {
+      firstName: "Aleesha",
+      lastName: "Drussell",
+      email: "pastelpurple30@lmaritimen.com",
+      password: "1234567890",
+      referral: "I5dt",
+    };
+
+    const register: ResponseDto<RegisterDto> = await init.auth.register(
+      payload
     );
 
     if (register.status === Status.ERROR)
