@@ -158,14 +158,17 @@ export const resetPassword = async (email: string) => {
 
 export const changePassword = async ({
   token,
+  tempToken,
   password,
 }: {
   token: string;
+  tempToken: string;
   password: string;
 }) => {
   try {
     const change: ResponseDto<void> = await init.auth.changePassword(
       token,
+      tempToken,
       password
     );
     if (change.status === Status.ERROR)
@@ -187,10 +190,14 @@ export const changePassword = async ({
   }
 };
 
-export const validatePasswordToken = async (token: string) => {
+export const validatePasswordToken = async (
+  token: string,
+  tempToken: string
+) => {
   try {
     const validate: ResponseDto<void> = await init.auth.validatePasswordToken(
-      token
+      token,
+      tempToken
     );
     if (validate.status === Status.ERROR)
       return internalResponse(

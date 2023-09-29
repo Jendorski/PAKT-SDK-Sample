@@ -664,10 +664,10 @@ on-finished@2.4.1:
   dependencies:
     ee-first "1.1.1"
 
-pakt-sdk@^0.1.20:
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/pakt-sdk/-/pakt-sdk-0.1.20.tgz#71249535d2d9cae7e90bf25bed546ba3794bd6bd"
-  integrity sha512-XPlBwYgfM361wkxjDlqw20wAXZcy3V/iIsqfViiRSM46V8HE3MYCOoT9TGP0w4u2E6tPrzu+xW9c8/rOkE0tHA==
+pakt-sdk@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/pakt-sdk/-/pakt-sdk-0.1.21.tgz#e864bdd42352aec027ed59916f08f2f9e19a3281"
+  integrity sha512-d6RVfMA/vupB2L3HDufxKX8OUawTGOjjKm2U9z0OB8PLCxcvxX6VEDh6IgP14WXI09/NmbcNW1KF7KyjRkXwDw==
   dependencies:
     node-fetch "^2.6.6"
     reflect-metadata "^0.1.13"
