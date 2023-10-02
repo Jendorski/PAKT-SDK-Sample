@@ -1,4 +1,5 @@
 import {
+  FilterUserDto,
   FindUsers,
   IUser,
   ResponseDto,
@@ -115,8 +116,13 @@ export const getAUser = async (userId: string) => {
 
 export const getUsers = async () => {
   try {
-    const filter = {};
-    const users: ResponseDto<FindUsers> = await init.account.getUsers(filter);
+    const sampleFilter: FilterUserDto = {
+      type: "recipient",
+      tags: ["UI/UX", "NodeJS", "Typescript"],
+    };
+    const users: ResponseDto<FindUsers> = await init.account.getUsers(
+      sampleFilter
+    );
     if (users.status === Status.ERROR)
       return internalResponse(
         true,
