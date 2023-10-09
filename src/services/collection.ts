@@ -7,6 +7,7 @@ import {
   ResponseDto,
   Status,
   UpdateCollectionDto,
+  UpdateManyCollectionsDto,
   filterCollectionDto,
 } from "pakt-sdk";
 import { internalResponse } from "../utils";
@@ -205,10 +206,11 @@ export const updateCollection = async (
       category: "sample_update",
       deliveryDate: "2023-11-17T12:53:40.718Z",
       tags: ["tag_one", "tag_two"],
-      deliverables: ["update one", "update two"],
+      //deliverables: ["update one", "update two"],
       parent: "650026e1f4542241c4f6fe11", //if the collection is part of a parent, then the id of the collection
       image: "https://file_uploaded_image_url",
-      staus: "ongoing", //or anyone based on the ICollectionStatus
+      status: "ongoing", //or anyone based on the ICollectionStatus,
+      attachments: ["123456789098765", "09876543456789087"],
     };
     const update = await init.collection.updateCollection(id, payload);
     if (update.status === Status.ERROR)
@@ -223,6 +225,78 @@ export const updateCollection = async (
       Number(update.code ?? update.statusCode),
       String(update.message),
       update
+    );
+  } catch (error: Error | unknown) {
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
+export const deleteCollection = async (collectionId: string) => {
+  try {
+    const deleted = await init.collection.deleteACollection(collectionId);
+    if (deleted.status === Status.ERROR)
+      return internalResponse(
+        true,
+        Number(deleted.code ?? deleted.statusCode),
+        String(deleted.message),
+        deleted
+      );
+    return internalResponse(
+      false,
+      Number(deleted.code ?? deleted.statusCode),
+      String(deleted.message),
+      deleted
+    );
+  } catch (error: Error | unknown) {
+    console.log({ error });
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
+export const updateManyCollections = async (
+  collections: UpdateManyCollectionsDto
+) => {
+  try {
+    const sampleUpdateManyCollections: UpdateManyCollectionsDto = {
+      collections: [
+        {
+          id: "",
+          name: "First Collection to be updated",
+          description: "Description of the first collection",
+          tags: ["first_tag"],
+          type: "job", //or any from any of the collection types
+          attachments: ["_id of the file uploaded"],
+          deliveryDate: "2023-10-10",
+          status: "completed",
+          parent: "_id of the collection thats the parent",
+        },
+        {
+          id: "",
+          name: "Second Collection to be updated",
+          description: "Description of the second collection",
+          tags: ["second_tag"],
+          type: "job", //or any from any of the collection types
+          attachments: ["_id of the file uploaded"],
+          deliveryDate: "2023-10-11",
+          status: "completed",
+        },
+      ],
+    };
+    const updatedMany = await init.collection.updateManyCollections(
+      collections
+    );
+    if (updatedMany.status === Status.ERROR)
+      return internalResponse(
+        true,
+        Number(updatedMany.code ?? updatedMany.statusCode),
+        String(updatedMany.message),
+        updatedMany
+      );
+    return internalResponse(
+      false,
+      Number(updatedMany.code ?? updatedMany.statusCode),
+      String(updatedMany.message),
+      updatedMany
     );
   } catch (error: Error | unknown) {
     return internalResponse(true, 422, String(error), null);
