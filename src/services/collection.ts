@@ -36,6 +36,7 @@ export const createCollection = async ({
         "This Collection is being created to store the details of a job, to develop a backend for a food app",
       tags: ["Node.JS", "Typescript"],
       deliveryDate: "2023-12-03T16:58:16.000Z",
+      meta: {},
       attachments: [], //attachments are the id of the files or documents uploaded with respect to this collection it can be left empty, if no files were uploaded
     };
 
@@ -83,6 +84,7 @@ export const createMany = async ({
           name: "Suede Shoe A",
           description: "This is suede shoe a, it sells for $500",
           isPrivate: true,
+          meta: {},
         },
         {
           category: "men_shoes",
@@ -90,6 +92,7 @@ export const createMany = async ({
           name: "Men's Flip Flop",
           description: "This is flip-flop sandal, it costs $200",
           isPrivate: true,
+          meta: {},
         },
       ],
     };
@@ -211,6 +214,7 @@ export const updateCollection = async (
       image: "https://file_uploaded_image_url",
       status: "ongoing", //or anyone based on the ICollectionStatus,
       attachments: ["123456789098765", "09876543456789087"],
+      meta: {},
     };
     const update = await init.collection.updateCollection(id, payload);
     if (update.status === Status.ERROR)
@@ -269,6 +273,7 @@ export const updateManyCollections = async (
           deliveryDate: "2023-10-10",
           status: "completed",
           parent: "_id of the collection thats the parent",
+          meta: {},
         },
         {
           id: "",
@@ -279,6 +284,7 @@ export const updateManyCollections = async (
           attachments: ["_id of the file uploaded"],
           deliveryDate: "2023-10-11",
           status: "completed",
+          meta: {},
         },
       ],
     };
