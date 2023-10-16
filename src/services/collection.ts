@@ -46,16 +46,11 @@ export const createCollection = async ({
     if (create.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(create.code ?? create.statusCode),
+        Number(422),
         String(create.message),
         create
       );
-    return internalResponse(
-      false,
-      Number(create.code ?? create.statusCode),
-      String(create.message),
-      create
-    );
+    return internalResponse(false, Number(200), String(create.message), create);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -99,18 +94,8 @@ export const createMany = async ({
     const many: ResponseDto<ICollectionDto[]> =
       await init.collection.createMany(collections);
     if (many.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(many.code ?? many.statusCode),
-        String(many.message),
-        many
-      );
-    return internalResponse(
-      false,
-      Number(many.code ?? many.statusCode),
-      String(many.message),
-      many
-    );
+      return internalResponse(true, Number(422), String(many.message), many);
+    return internalResponse(false, Number(200), String(many.message), many);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -157,13 +142,13 @@ export const fetchACollection = async (collectionId: string) => {
     if (aCollection.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(aCollection.code ?? aCollection.statusCode),
+        Number(422),
         String(aCollection.message),
         aCollection
       );
     return internalResponse(
       false,
-      Number(aCollection.code ?? aCollection.statusCode),
+      Number(200),
       String(aCollection.message),
       aCollection
     );
@@ -179,18 +164,8 @@ export const fetchCollectionTypes = async (filter: filterCollectionDto) => {
     const types: ResponseDto<FindCollectionTypeDto> =
       await init.collection.getTypes(filter);
     if (types.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(types.code ?? types.statusCode),
-        String(types.message),
-        types
-      );
-    return internalResponse(
-      false,
-      Number(types.code ?? types.statusCode),
-      String(types.message),
-      types
-    );
+      return internalResponse(true, Number(422), String(types.message), types);
+    return internalResponse(false, Number(200), String(types.message), types);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -221,16 +196,11 @@ export const updateCollection = async (
     if (update.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(update.code ?? update.statusCode),
+        Number(422),
         String(update.message),
         update
       );
-    return internalResponse(
-      false,
-      Number(update.code ?? update.statusCode),
-      String(update.message),
-      update
-    );
+    return internalResponse(false, Number(200), String(update.message), update);
   } catch (error: Error | unknown) {
     return internalResponse(true, 422, String(error), null);
   }
@@ -242,13 +212,13 @@ export const deleteCollection = async (collectionId: string) => {
     if (deleted.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(deleted.code ?? deleted.statusCode),
+        Number(422),
         String(deleted.message),
         deleted
       );
     return internalResponse(
       false,
-      Number(deleted.code ?? deleted.statusCode),
+      Number(200),
       String(deleted.message),
       deleted
     );
@@ -295,13 +265,13 @@ export const updateManyCollections = async (
     if (updatedMany.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(updatedMany.code ?? updatedMany.statusCode),
+        Number(422),
         String(updatedMany.message),
         updatedMany
       );
     return internalResponse(
       false,
-      Number(updatedMany.code ?? updatedMany.statusCode),
+      Number(200),
       String(updatedMany.message),
       updatedMany
     );

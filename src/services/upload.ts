@@ -22,16 +22,11 @@ export const fileUpload = async ({
     if (upload.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(upload.code ?? upload.statusCode),
+        Number(422),
         String(upload.message),
         upload
       );
-    return internalResponse(
-      false,
-      Number(upload.code ?? upload.statusCode),
-      String(upload.message),
-      upload
-    );
+    return internalResponse(false, Number(200), String(upload.message), upload);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -50,13 +45,13 @@ export const fetchFileUploads = async (filter: FilterUploadDto) => {
     if (uploads.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(uploads.code ?? uploads.statusCode),
+        Number(422),
         String(uploads.message),
         uploads
       );
     return internalResponse(
       false,
-      Number(uploads.code ?? uploads.statusCode),
+      Number(200),
       String(uploads.message),
       uploads
     );
@@ -72,13 +67,13 @@ export const fetchAFileUpload = async (id: string) => {
     if (anUpload.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(anUpload.code ?? anUpload.statusCode),
+        Number(422),
         String(anUpload.message),
         anUpload
       );
     return internalResponse(
       false,
-      Number(anUpload.code ?? anUpload.statusCode),
+      Number(200),
       String(anUpload.message),
       anUpload
     );

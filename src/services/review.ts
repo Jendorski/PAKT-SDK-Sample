@@ -19,18 +19,8 @@ export const addReview = async ({ review }: { review: AddReviewDto }) => {
     // };
     const add = await init.review.addReview(review);
     if (add.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(add.code ?? add.statusCode),
-        String(add.message),
-        add
-      );
-    return internalResponse(
-      false,
-      Number(add.code ?? add.statusCode),
-      String(add.message),
-      add
-    );
+      return internalResponse(true, Number(422), String(add.message), add);
+    return internalResponse(false, Number(200), String(add.message), add);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -49,13 +39,13 @@ export const viewAllReviews = async ({
     if (reviews.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(reviews.code ?? reviews.statusCode),
+        Number(422),
         String(reviews.message),
         reviews
       );
     return internalResponse(
       false,
-      Number(reviews.code ?? reviews.statusCode),
+      Number(200),
       String(reviews.message),
       reviews
     );

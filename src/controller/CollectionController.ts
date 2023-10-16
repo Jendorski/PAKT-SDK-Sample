@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import { CreateCollectionDto } from "pakt-sdk";
-import { createCollection, fetchCollections } from "../services/collection";
+import {
+  createCollection,
+  deleteCollection,
+  fetchACollection,
+  fetchCollections,
+  updateCollection,
+} from "../services/collection";
 import Utils from "../utils/response";
 
 const { success, failed } = Utils;
@@ -29,9 +35,45 @@ const CollectionController = {
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
-  getACollection: async (req: Request, res: Response) => {},
-  update: async (req: Request, res: Response) => {},
+  getACollection: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const resp = await fetchACollection(id);
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  update: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const {
+      name,
+      description,
+      isPrivate,
+      deliveryDate,
+      meta,
+      type,
+      attachments,
+    } = req.body;
+    const payload = {
+      name,
+      description,
+      isPrivate,
+      deliveryDate,
+      meta,
+      type,
+      attachments,
+    };
+    const resp = await updateCollection(id, payload);
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
   updateMany: async (req: Request, res: Response) => {},
-  delete: async (req: Request, res: Response) => {},
+  delete: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const resp = await deleteCollection(id);
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
 };
 export default CollectionController;

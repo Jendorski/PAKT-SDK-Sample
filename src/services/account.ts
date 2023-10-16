@@ -26,16 +26,11 @@ export const changePassword = async ({
     if (change.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(change.code ?? change.statusCode),
+        Number(422),
         String(change.message),
         change
       );
-    return internalResponse(
-      false,
-      Number(change.code ?? change.statusCode),
-      String(change.message),
-      change
-    );
+    return internalResponse(false, Number(200), String(change.message), change);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -65,16 +60,11 @@ export const updateAccount = async ({
     if (update.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(update.code ?? update.statusCode),
+        Number(422),
         String(update.message),
         update
       );
-    return internalResponse(
-      false,
-      Number(update.code ?? update.statusCode),
-      String(update.message),
-      update
-    );
+    return internalResponse(false, Number(200), String(update.message), update);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -85,18 +75,8 @@ export const getUser = async () => {
   try {
     const get: ResponseDto<IUser> = await init.account.getUser();
     if (get.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(get.code ?? get.statusCode),
-        String(get.message),
-        get
-      );
-    return internalResponse(
-      false,
-      Number(get.code ?? get.statusCode),
-      String(get.message),
-      get
-    );
+      return internalResponse(true, Number(422), String(get.message), get);
+    return internalResponse(false, Number(200), String(get.message), get);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -107,18 +87,8 @@ export const getAUser = async (userId: string) => {
   try {
     const get: ResponseDto<IUser> = await init.account.getAUser(userId);
     if (get.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(get.code ?? get.statusCode),
-        String(get.message),
-        get
-      );
-    return internalResponse(
-      false,
-      Number(get.code ?? get.statusCode),
-      String(get.message),
-      get
-    );
+      return internalResponse(true, Number(422), String(get.message), get);
+    return internalResponse(false, Number(200), String(get.message), get);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -135,18 +105,8 @@ export const getUsers = async () => {
       sampleFilter
     );
     if (users.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(users.code ?? users.statusCode),
-        String(users.message),
-        users
-      );
-    return internalResponse(
-      false,
-      Number(users.code ?? users.statusCode),
-      String(users.message),
-      users
-    );
+      return internalResponse(true, Number(422), String(users.message), users);
+    return internalResponse(false, Number(200), String(users.message), users);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`, null);
     return internalResponse(true, 422, String(error), null);
@@ -159,13 +119,13 @@ export const initiateTwoFA = async (type: TwoFATypeDto) => {
     if (initiate.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(initiate.code ?? initiate.statusCode),
+        Number(422),
         String(initiate.message),
         initiate
       );
     return internalResponse(
       false,
-      Number(initiate.code ?? initiate.statusCode),
+      Number(200),
       String(initiate.message),
       initiate
     );
@@ -181,13 +141,13 @@ export const activateTwoFA = async (code: string) => {
     if (activate.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(activate.code ?? activate.statusCode),
+        Number(422),
         String(activate.message),
         activate
       );
     return internalResponse(
       false,
-      Number(activate.code ?? activate.statusCode),
+      Number(200),
       String(activate.message),
       activate
     );
@@ -203,13 +163,13 @@ export const deactivateTwoFA = async (code: string) => {
     if (deactivate.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(deactivate.code ?? deactivate.statusCode),
+        Number(422),
         String(deactivate.message),
         deactivate
       );
     return internalResponse(
       false,
-      Number(deactivate.code ?? deactivate.statusCode),
+      Number(200),
       String(deactivate.message),
       deactivate
     );
@@ -225,13 +185,13 @@ export const sendEmailTwoFA = async () => {
     if (sendEmailTwoFA.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(sendEmailTwoFA.code ?? sendEmailTwoFA.statusCode),
+        Number(422),
         String(sendEmailTwoFA.message),
         sendEmailTwoFA
       );
     return internalResponse(
       false,
-      Number(sendEmailTwoFA.code ?? sendEmailTwoFA.statusCode),
+      Number(200),
       String(sendEmailTwoFA.message),
       sendEmailTwoFA
     );
@@ -247,13 +207,13 @@ export const logout = async () => {
     if (logUserOut.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(logUserOut.code ?? logUserOut.statusCode),
+        Number(422),
         String(logUserOut.message),
         logUserOut
       );
     return internalResponse(
       false,
-      Number(logUserOut.code ?? logUserOut.statusCode),
+      Number(200),
       String(logUserOut.message),
       logUserOut
     );

@@ -29,16 +29,11 @@ export const acceptInvite = async (inviteId: string) => {
     if (accept.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(accept.code ?? accept.statusCode),
+        Number(422),
         String(accept.message),
         accept
       );
-    return internalResponse(
-      false,
-      Number(accept.code ?? accept.statusCode),
-      String(accept.message),
-      accept
-    );
+    return internalResponse(false, Number(200), String(accept.message), accept);
   } catch (error: Error | unknown) {
     console.log("acceptInvite:, ", { error });
     return internalResponse(true, 422, String(error), null);
@@ -51,16 +46,11 @@ export const declineInvite = async (inviteId: string) => {
     if (accept.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(accept.code ?? accept.statusCode),
+        Number(422),
         String(accept.message),
         accept
       );
-    return internalResponse(
-      false,
-      Number(accept.code ?? accept.statusCode),
-      String(accept.message),
-      accept
-    );
+    return internalResponse(false, Number(200), String(accept.message), accept);
   } catch (error: Error | unknown) {
     console.log("declineInvite:, ", { error });
     return internalResponse(true, 422, String(error), null);
@@ -71,25 +61,15 @@ export const getAllInvites = async (
   filter: Record<string, any> | IInviteDto
 ) => {
   try {
-    const newFilter = {
-      sender: "12345678909",
-      reciever: "12345678909",
-      status: "pending",
-    };
-    const gets = await init.invite.getAll(newFilter);
+    // const newFilter = {
+    //   sender: "12345678909",
+    //   reciever: "12345678909",
+    //   status: "pending",
+    // };
+    const gets = await init.invite.getAll(filter);
     if (gets.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(gets.code ?? gets.statusCode),
-        String(gets.message),
-        gets
-      );
-    return internalResponse(
-      false,
-      Number(gets.code ?? gets.statusCode),
-      String(gets.message),
-      gets
-    );
+      return internalResponse(true, Number(422), String(gets.message), gets);
+    return internalResponse(false, Number(200), String(gets.message), gets);
   } catch (error: Error | unknown) {
     console.log("getAllInvites:, ", { error });
     return internalResponse(true, 422, String(error), null);
@@ -102,13 +82,13 @@ export const getAnInvite = async (inviteId: string) => {
     if (anInvite.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(anInvite.code ?? anInvite.statusCode),
+        Number(422),
         String(anInvite.message),
         anInvite
       );
     return internalResponse(
       false,
-      Number(anInvite.code ?? anInvite.statusCode),
+      Number(200),
       String(anInvite.message),
       anInvite
     );

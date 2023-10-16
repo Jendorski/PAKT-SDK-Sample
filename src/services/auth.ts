@@ -15,19 +15,21 @@ export const registration = async ({
   lastName,
   email,
   password,
+  referral,
 }: {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  referral: string;
 }) => {
   try {
     const payload = {
-      firstName: "Aleesha",
-      lastName: "Drussell",
-      email: "pastelpurple30@lmaritimen.com",
-      password: "1234567890",
-      referral: "I5dt",
+      firstName,
+      lastName,
+      email,
+      password,
+      referral,
     };
 
     const register: ResponseDto<RegisterDto> = await init.auth.register(
@@ -37,18 +39,19 @@ export const registration = async ({
     if (register.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(register.code ?? register.statusCode),
+        Number(422),
         String(register.message),
         register
       );
     return internalResponse(
       false,
-      Number(register.code ?? register.statusCode),
+      Number(200),
       String(register.message),
       register
     );
   } catch (error: Error | unknown) {
-    return null;
+    console.error({ error });
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
@@ -66,19 +69,19 @@ export const verifyAccount = async ({
     if (verifyAccount.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(verifyAccount.code ?? verifyAccount.statusCode),
+        Number(422),
         String(verifyAccount.message),
         verifyAccount
       );
     return internalResponse(
       false,
-      Number(verifyAccount.code ?? verifyAccount.statusCode),
+      Number(200),
       String(verifyAccount.message),
       verifyAccount
     );
   } catch (error: Error | unknown) {
     console.log({ error });
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
@@ -119,19 +122,14 @@ export const resendVerificationLink = async (email: string) => {
     if (resent.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(resent.code ?? resent.statusCode),
+        Number(422),
         String(resent.message),
         resent
       );
-    return internalResponse(
-      false,
-      Number(resent.code ?? resent.statusCode),
-      String(resent.message),
-      resent
-    );
+    return internalResponse(false, Number(200), String(resent.message), resent);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
@@ -139,21 +137,11 @@ export const resetPassword = async (email: string) => {
   try {
     const reset: ResponseDto<ResetDto> = await init.auth.resetPassword(email);
     if (reset.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(reset.code ?? reset.statusCode),
-        String(reset.message),
-        reset
-      );
-    return internalResponse(
-      false,
-      Number(reset.code ?? reset.statusCode),
-      String(reset.message),
-      reset
-    );
+      return internalResponse(true, Number(422), String(reset.message), reset);
+    return internalResponse(false, Number(200), String(reset.message), reset);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
@@ -175,19 +163,14 @@ export const changePassword = async ({
     if (change.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(change.code ?? change.statusCode),
+        Number(422),
         String(change.message),
         change
       );
-    return internalResponse(
-      false,
-      Number(change.code ?? change.statusCode),
-      String(change.message),
-      change
-    );
+    return internalResponse(false, Number(200), String(change.message), change);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
@@ -203,18 +186,18 @@ export const validatePasswordToken = async (
     if (validate.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(validate.code ?? validate.statusCode),
+        Number(422),
         String(validate.message),
         validate
       );
     return internalResponse(
       false,
-      Number(validate.code ?? validate.statusCode),
+      Number(200),
       String(validate.message),
       validate
     );
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };

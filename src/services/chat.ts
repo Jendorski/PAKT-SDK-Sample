@@ -9,13 +9,13 @@ export const getChatMessages = async () => {
     if (messsages.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(messsages.code ?? messsages.statusCode),
+        Number(422),
         String(messsages.message),
         messsages
       );
     return internalResponse(
       false,
-      Number(messsages.code ?? messsages.statusCode),
+      Number(200),
       String(messsages.message),
       messsages
     );

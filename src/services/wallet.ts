@@ -17,13 +17,13 @@ export const fetchWallets = async () => {
     if (wallets.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(wallets.code ?? wallets.statusCode),
+        Number(422),
         String(wallets.message),
         wallets
       );
     return internalResponse(
       false,
-      Number(wallets.code ?? wallets.statusCode),
+      Number(200),
       String(wallets.message),
       wallets
     );
@@ -40,13 +40,13 @@ export const fetchWalletData = async () => {
     if (walletData.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(walletData.code ?? walletData.statusCode),
+        Number(422),
         String(walletData.message),
         walletData
       );
     return internalResponse(
       false,
-      Number(walletData.code ?? walletData.statusCode),
+      Number(200),
       String(walletData.message),
       walletData
     );
@@ -61,18 +61,8 @@ export const getTransactions = async () => {
     const txns: ResponseDto<FindTransactionsDto> =
       await init.wallet.getTransactions();
     if (txns.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(txns.code ?? txns.statusCode),
-        String(txns.message),
-        txns
-      );
-    return internalResponse(
-      false,
-      Number(txns.code ?? txns.statusCode),
-      String(txns.message),
-      txns
-    );
+      return internalResponse(true, Number(422), String(txns.message), txns);
+    return internalResponse(false, Number(200), String(txns.message), txns);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -86,13 +76,13 @@ export const getTransactionsStats = async () => {
     if (txnStats.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(txnStats.code ?? txnStats.statusCode),
+        Number(422),
         String(txnStats.message),
         txnStats
       );
     return internalResponse(
       false,
-      Number(txnStats.code ?? txnStats.statusCode),
+      Number(200),
       String(txnStats.message),
       txnStats
     );
@@ -107,18 +97,8 @@ export const getATransaction = async (id: string) => {
     const aTxn: ResponseDto<ITransactionDto> =
       await init.wallet.getATransaction(id);
     if (aTxn.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(aTxn.code ?? aTxn.statusCode),
-        String(aTxn.message),
-        aTxn
-      );
-    return internalResponse(
-      false,
-      Number(aTxn.code ?? aTxn.statusCode),
-      String(aTxn.message),
-      aTxn
-    );
+      return internalResponse(true, Number(422), String(aTxn.message), aTxn);
+    return internalResponse(false, Number(200), String(aTxn.message), aTxn);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
     return internalResponse(true, 422, String(error), null);
@@ -132,13 +112,13 @@ export const getExchange = async () => {
     if (exchange.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(exchange.code ?? exchange.statusCode),
+        Number(422),
         String(exchange.message),
         exchange
       );
     return internalResponse(
       false,
-      Number(exchange.code ?? exchange.statusCode),
+      Number(200),
       String(exchange.message),
       exchange
     );
