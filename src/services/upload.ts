@@ -40,10 +40,10 @@ export const fileUpload = async ({
 
 export const fetchFileUploads = async (filter: FilterUploadDto) => {
   try {
-    const sampleFilter = {
-      page: "1",
-      limit: "20",
-    };
+    // const sampleFilter = {
+    //   page: "1",
+    //   limit: "20",
+    // };
     const uploads: ResponseDto<FindUploadDto> = await init.file.getFileUploads(
       filter
     );

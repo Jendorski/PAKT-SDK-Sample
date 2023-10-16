@@ -27,18 +27,18 @@ export const createCollection = async ({
      *
      * Note that the type can be fetched from init.collection.getTypes(filter);
      */
-    const jobPayload: CreateCollectionDto = {
-      type: "job", //fetched from the init.collection.getTypes(filter);
-      category: "backend",
-      name: "Food App Backend Application",
-      isPrivate: true,
-      description:
-        "This Collection is being created to store the details of a job, to develop a backend for a food app",
-      tags: ["Node.JS", "Typescript"],
-      deliveryDate: "2023-12-03T16:58:16.000Z",
-      meta: {},
-      attachments: [], //attachments are the id of the files or documents uploaded with respect to this collection it can be left empty, if no files were uploaded
-    };
+    // const jobPayload: CreateCollectionDto = {
+    //   type: "job", //fetched from the init.collection.getTypes(filter);
+    //   category: "backend",
+    //   name: "Food App Backend Application",
+    //   isPrivate: true,
+    //   description:
+    //     "This Collection is being created to store the details of a job, to develop a backend for a food app",
+    //   tags: ["Node.JS", "Typescript"],
+    //   deliveryDate: "2023-12-03T16:58:16.000Z",
+    //   meta: {},
+    //   attachments: [], //attachments are the id of the files or documents uploaded with respect to this collection it can be left empty, if no files were uploaded
+    // };
 
     const create: ResponseDto<ICollectionDto> = await init.collection.create(
       payload
@@ -74,28 +74,28 @@ export const createMany = async ({
     /**
      * A sample collections payload, for shoes
      */
-    const manyShoesPayload: CreateManyCollectionDto = {
-      parent: "6193848473827204048738", //the parent collection id
-      type: "Shoes",
-      collections: [
-        {
-          category: "men_shoes",
-          tags: ["suede"],
-          name: "Suede Shoe A",
-          description: "This is suede shoe a, it sells for $500",
-          isPrivate: true,
-          meta: {},
-        },
-        {
-          category: "men_shoes",
-          tags: ["flip_flop"],
-          name: "Men's Flip Flop",
-          description: "This is flip-flop sandal, it costs $200",
-          isPrivate: true,
-          meta: {},
-        },
-      ],
-    };
+    // const manyShoesPayload: CreateManyCollectionDto = {
+    //   parent: "6193848473827204048738", //the parent collection id
+    //   type: "Shoes",
+    //   collections: [
+    //     {
+    //       category: "men_shoes",
+    //       tags: ["suede"],
+    //       name: "Suede Shoe A",
+    //       description: "This is suede shoe a, it sells for $500",
+    //       isPrivate: true,
+    //       meta: {},
+    //     },
+    //     {
+    //       category: "men_shoes",
+    //       tags: ["flip_flop"],
+    //       name: "Men's Flip Flop",
+    //       description: "This is flip-flop sandal, it costs $200",
+    //       isPrivate: true,
+    //       meta: {},
+    //     },
+    //   ],
+    // };
     const many: ResponseDto<ICollectionDto[]> =
       await init.collection.createMany(collections);
     if (many.status === Status.ERROR)
@@ -127,21 +127,22 @@ export const fetchCollections = async ({
   filter: filterCollectionDto;
 }) => {
   try {
+    console.log({ filterInner: { ...filter } });
     const fetch: ResponseDto<FindCollectionDto> = await init.collection.getAll(
       filter
     );
     if (fetch.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(fetch.code ?? fetch.statusCode),
-        String(fetch.message),
+        Number(422),
+        String(`${fetch.status}_${fetch.message}`),
         fetch
       );
     return internalResponse(
       false,
-      Number(fetch.code ?? fetch.statusCode),
+      Number(200),
       String(fetch.message),
-      fetch
+      fetch.data
     );
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
@@ -201,21 +202,21 @@ export const updateCollection = async (
   payload: UpdateCollectionDto
 ) => {
   try {
-    const samplePayload: UpdateCollectionDto = {
-      type: "job",
-      name: "Sample Update",
-      description: "This is a sample update of a collection",
-      isPrivate: false,
-      category: "sample_update",
-      deliveryDate: "2023-11-17T12:53:40.718Z",
-      tags: ["tag_one", "tag_two"],
-      //deliverables: ["update one", "update two"],
-      parent: "650026e1f4542241c4f6fe11", //if the collection is part of a parent, then the id of the collection
-      image: "https://file_uploaded_image_url",
-      status: "ongoing", //or anyone based on the ICollectionStatus,
-      attachments: ["123456789098765", "09876543456789087"],
-      meta: {},
-    };
+    // const samplePayload: UpdateCollectionDto = {
+    //   type: "job",
+    //   name: "Sample Update",
+    //   description: "This is a sample update of a collection",
+    //   isPrivate: false,
+    //   category: "sample_update",
+    //   deliveryDate: "2023-11-17T12:53:40.718Z",
+    //   tags: ["tag_one", "tag_two"],
+    //   //deliverables: ["update one", "update two"],
+    //   parent: "650026e1f4542241c4f6fe11", //if the collection is part of a parent, then the id of the collection
+    //   image: "https://file_uploaded_image_url",
+    //   status: "ongoing", //or anyone based on the ICollectionStatus,
+    //   attachments: ["123456789098765", "09876543456789087"],
+    //   meta: {},
+    // };
     const update = await init.collection.updateCollection(id, payload);
     if (update.status === Status.ERROR)
       return internalResponse(
@@ -261,33 +262,33 @@ export const updateManyCollections = async (
   collections: UpdateManyCollectionsDto
 ) => {
   try {
-    const sampleUpdateManyCollections: UpdateManyCollectionsDto = {
-      collections: [
-        {
-          id: "",
-          name: "First Collection to be updated",
-          description: "Description of the first collection",
-          tags: ["first_tag"],
-          type: "job", //or any from any of the collection types
-          attachments: ["_id of the file uploaded"],
-          deliveryDate: "2023-10-10",
-          status: "completed",
-          parent: "_id of the collection thats the parent",
-          meta: {},
-        },
-        {
-          id: "",
-          name: "Second Collection to be updated",
-          description: "Description of the second collection",
-          tags: ["second_tag"],
-          type: "job", //or any from any of the collection types
-          attachments: ["_id of the file uploaded"],
-          deliveryDate: "2023-10-11",
-          status: "completed",
-          meta: {},
-        },
-      ],
-    };
+    // const sampleUpdateManyCollections: UpdateManyCollectionsDto = {
+    //   collections: [
+    //     {
+    //       id: "",
+    //       name: "First Collection to be updated",
+    //       description: "Description of the first collection",
+    //       tags: ["first_tag"],
+    //       type: "job", //or any from any of the collection types
+    //       attachments: ["_id of the file uploaded"],
+    //       deliveryDate: "2023-10-10",
+    //       status: "completed",
+    //       parent: "_id of the collection thats the parent",
+    //       meta: {},
+    //     },
+    //     {
+    //       id: "",
+    //       name: "Second Collection to be updated",
+    //       description: "Description of the second collection",
+    //       tags: ["second_tag"],
+    //       type: "job", //or any from any of the collection types
+    //       attachments: ["_id of the file uploaded"],
+    //       deliveryDate: "2023-10-11",
+    //       status: "completed",
+    //       meta: {},
+    //     },
+    //   ],
+    // };
     const updatedMany = await init.collection.updateManyCollections(
       collections
     );

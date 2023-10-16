@@ -11,12 +11,12 @@ const TAG = "services/review";
 
 export const addReview = async ({ review }: { review: AddReviewDto }) => {
   try {
-    const sampleReview: AddReviewDto = {
-      review: "Excellent work done",
-      rating: 5,
-      collectionId: "64fa1d5f64d7ee50b86ce6d0",
-      receiver: "64ff1592db081228cc9bdafd",
-    };
+    // const sampleReview: AddReviewDto = {
+    //   review: "Excellent work done",
+    //   rating: 5,
+    //   collectionId: "64fa1d5f64d7ee50b86ce6d0",
+    //   receiver: "64ff1592db081228cc9bdafd",
+    // };
     const add = await init.review.addReview(review);
     if (add.status === Status.ERROR)
       return internalResponse(

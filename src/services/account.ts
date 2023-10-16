@@ -48,17 +48,17 @@ export const updateAccount = async ({
   payload: updateUserDto;
 }) => {
   try {
-    const sampleUpdatePayload: updateUserDto = {
-      profileImage: "",
-      bgImage: "",
-      meta: {},
-      profile: {
-        contact: {
-          country: "United Kingdom",
-        },
-      },
-      userName: "",
-    };
+    // const sampleUpdatePayload: updateUserDto = {
+    //   profileImage: "",
+    //   bgImage: "",
+    //   meta: {},
+    //   profile: {
+    //     contact: {
+    //       country: "United Kingdom",
+    //     },
+    //   },
+    //   userName: "",
+    // };
     const update: ResponseDto<IUser> = await init.account.updateAccount(
       payload
     );

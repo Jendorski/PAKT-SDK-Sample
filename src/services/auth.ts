@@ -91,22 +91,23 @@ export const login = async ({
 }) => {
   try {
     const login: ResponseDto<LoginDto> = await init.auth.login(email, password);
+    console.log({ login });
     if (login.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(login.code ?? login.statusCode),
-        String(login.message),
+        Number(422),
+        String(`${login.status}_${login.message}`),
         login
       );
     return internalResponse(
       false,
-      Number(login.code ?? login.statusCode),
+      Number(200),
       String(login.message),
-      login
+      login.data
     );
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);
-    return null;
+    return internalResponse(true, 422, String(error), null);
   }
 };
 
