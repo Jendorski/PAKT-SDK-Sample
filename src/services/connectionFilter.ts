@@ -4,6 +4,7 @@ import { internalResponse } from "../utils";
 export const updateConnectionFilter = async () => {
   try {
     const payload: IConnectionFilter = {
+      _id: "",
       event: "CREATE_CONVERSATION", // CREATE_JOB, ASSIGN_JOB, CREATE_CONVERSATION
       key: "tagCount", //afroScore, tagCount, tags
       value: 12,

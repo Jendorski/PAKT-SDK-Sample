@@ -828,10 +828,10 @@ on-headers@~1.0.2:
   resolved "https://registry.yarnpkg.com/on-headers/-/on-headers-1.0.2.tgz#772b0ae6aaa525c399e489adfad90c403eb3c28f"
   integrity sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==
 
-pakt-sdk@^0.1.28:
-  version "0.1.28"
-  resolved "https://registry.yarnpkg.com/pakt-sdk/-/pakt-sdk-0.1.28.tgz#a6dfd6b077c362504c4df2cb0f38dfcca175e996"
-  integrity sha512-P0/r53NrOB6CdVs9w2z4B+1/wNCH7d+4lQ91zy9uHsuwYS6pvIxkVpkUPEMxsk6hDmNmtc8rFt+XDg16htIw5A==
+pakt-sdk@^0.1.30:
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/pakt-sdk/-/pakt-sdk-0.1.30.tgz#8ea29e7a3c5f0bd90d3931b2c28ab5aab96b28da"
+  integrity sha512-IgnHiaOBRSdv3xv5WtWhRdktGgXM1bZdiw21yHiU/WOyv1tZIxKxYeSvR/kjQCttkuec0VBgO4Xj5fP1AyMERg==
   dependencies:
     node-fetch "^2.6.6"
     reflect-metadata "^0.1.13"

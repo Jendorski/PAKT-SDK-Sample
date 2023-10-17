@@ -68,7 +68,7 @@ const CollectionController = {
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   updateMany: async (req: Request, res: Response) => {},
-  delete: async (req: Request, res: Response) => {
+  deleteACollection: async (req: Request, res: Response) => {
     const id = req.params.id;
     const resp = await deleteCollection(id);
     if (resp.error)

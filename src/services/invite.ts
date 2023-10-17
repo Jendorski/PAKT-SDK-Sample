@@ -1,4 +1,10 @@
-import { IInviteDto, SendInviteDto, Status } from "pakt-sdk";
+import {
+  ICollectionDto,
+  IInviteDto,
+  ResponseDto,
+  SendInviteDto,
+  Status,
+} from "pakt-sdk";
 import { internalResponse } from "../utils";
 
 export const sendInvite = async ({ payload }: { payload: SendInviteDto }) => {
@@ -42,15 +48,20 @@ export const acceptInvite = async (inviteId: string) => {
 
 export const declineInvite = async (inviteId: string) => {
   try {
-    const accept = await init.invite.acceptInvite(inviteId);
-    if (accept.status === Status.ERROR)
+    const decline: ResponseDto<{}> = await init.invite.declineInvite(inviteId);
+    if (decline.status === Status.ERROR)
       return internalResponse(
         true,
         Number(422),
-        String(accept.message),
-        accept
+        String(decline.message),
+        decline
       );
-    return internalResponse(false, Number(200), String(accept.message), accept);
+    return internalResponse(
+      false,
+      Number(200),
+      String(decline.message),
+      decline
+    );
   } catch (error: Error | unknown) {
     console.log("declineInvite:, ", { error });
     return internalResponse(true, 422, String(error), null);
@@ -78,7 +89,15 @@ export const getAllInvites = async (
 
 export const getAnInvite = async (inviteId: string) => {
   try {
-    const anInvite = await init.invite.getAnInvite(inviteId);
+    const anInvite: ResponseDto<IInviteDto> = await init.invite.getAnInvite(
+      inviteId
+    );
+    const { _id, data } = anInvite.data;
+
+    const collection: ICollectionDto = data as ICollectionDto;
+
+    const collectionId = collection?._id;
+
     if (anInvite.status === Status.ERROR)
       return internalResponse(
         true,

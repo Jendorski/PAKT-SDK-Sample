@@ -10,10 +10,5 @@ router.post("/login", controllerWrapper(login));
 router.post("/register", controllerWrapper(register));
 router.post("/resend", controllerWrapper(resendVerification));
 router.post("/password/reset", controllerWrapper(resetPassword));
-router.post("");
-router.post("");
-router.post("");
-router.post("");
-router.post("");
 
 export default router;
