@@ -10,12 +10,11 @@ import { internalResponse } from "../utils";
 
 const TAG = "services/upload";
 
-export const fileUpload = async ({
-  filePayload,
-}: {
-  filePayload: CreateFileUpload;
-}) => {
+export const fileUpload = async ({ file }: { file: any }) => {
   try {
+    const filePayload: CreateFileUpload = {
+      file,
+    };
     const upload: ResponseDto<IUploadDto> = await init.file.fileUpload(
       filePayload
     );
