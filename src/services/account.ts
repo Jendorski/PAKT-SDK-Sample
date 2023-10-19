@@ -95,15 +95,14 @@ export const getAUser = async (userId: string) => {
   }
 };
 
-export const getUsers = async () => {
+export const getUsers = async (filter?: Record<string, any>) => {
   try {
     const sampleFilter: FilterUserDto = {
       type: "recipient",
       tags: ["UI/UX", "NodeJS", "Typescript"],
     };
-    const users: ResponseDto<FindUsers> = await init.account.getUsers(
-      sampleFilter
-    );
+    console.log({ sampleFilter });
+    const users: ResponseDto<FindUsers> = await init.account.getUsers(filter);
     if (users.status === Status.ERROR)
       return internalResponse(true, Number(422), String(users.message), users);
     return internalResponse(false, Number(200), String(users.message), users);

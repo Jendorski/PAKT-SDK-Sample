@@ -12,6 +12,7 @@ const TAG = "services/upload";
 
 export const fileUpload = async ({ file }: { file: any }) => {
   try {
+    console.log({ theFile: file });
     const filePayload: CreateFileUpload = {
       file,
     };
@@ -38,9 +39,9 @@ export const fetchFileUploads = async (filter: FilterUploadDto) => {
     //   page: "1",
     //   limit: "20",
     // };
-    const uploads: ResponseDto<FindUploadDto> = await init.file.getFileUploads(
-      filter
-    );
+    const uploads: ResponseDto<FindUploadDto> =
+      await init.file.getFileUploads();
+    console.log({ uploads });
     if (uploads.status === Status.ERROR)
       return internalResponse(
         true,

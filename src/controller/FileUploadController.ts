@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { fileUpload } from "../services/upload";
+import {
+  fetchAFileUpload,
+  fetchFileUploads,
+  fileUpload,
+} from "../services/upload";
 import Utils from "../utils/response";
 
 const { failed, success } = Utils;
@@ -16,6 +20,18 @@ const FileUploadController = {
     });
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  getUploads: async (req: Request, res: Response) => {
+    const resp = await fetchFileUploads({ ...req.query });
+    if (resp?.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  getAFileUpload: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const resp = await fetchAFileUpload(id);
+    return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
 };

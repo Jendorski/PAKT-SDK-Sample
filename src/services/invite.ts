@@ -93,10 +93,12 @@ export const getAnInvite = async (inviteId: string) => {
       inviteId
     );
     const { _id, data } = anInvite.data;
+    console.log({ _id });
 
     const collection: ICollectionDto = data as ICollectionDto;
 
     const collectionId = collection?._id;
+    console.log({ collectionId });
 
     if (anInvite.status === Status.ERROR)
       return internalResponse(

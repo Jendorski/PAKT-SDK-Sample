@@ -10,7 +10,7 @@ import api from "./routes/index";
 import morganMiddleware from "./utils/morgan";
 import Utils from "./utils/response";
 
-const { failed } = Utils;
+const { success } = Utils;
 
 dotenv.config();
 
@@ -50,13 +50,13 @@ app.use(
   })
 );
 
-app.use("/", api);
+app.use("/v1", api);
 
 //app.use(api);
 
 // Basic ? Response
 app.get("/", (req: Request, res: Response) => {
-  return failed(
+  return success(
     res,
     {},
     `${config.APP_NAME} is online ${Date()} on ${req.app.get(

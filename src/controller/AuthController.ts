@@ -26,7 +26,7 @@ const AuthController = {
 
     if (!firstName) return failed(res, null, "Supply firstName", 400);
     if (!lastName) return failed(res, null, "Supply lastName", 400);
-    if (!referral) return failed(res, null, "Supply referral", 400);
+    //if (!referral) return failed(res, null, "Supply referral", 400);
     if (!email) return failed(res, null, "Supply email", 400);
     if (!password) return failed(res, null, "Supply password", 400);
 
