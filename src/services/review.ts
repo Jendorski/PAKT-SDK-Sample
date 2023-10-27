@@ -33,8 +33,11 @@ export const viewAllReviews = async ({
   filter: FilterReviewDto;
 }) => {
   try {
+    const sampleFilter: FilterReviewDto = {
+      userId: "12345678909876543",
+    };
     const reviews: ResponseDto<FindReviewDto> = await init.review.viewAll(
-      filter ?? {}
+      sampleFilter ?? filter
     );
     if (reviews.status === Status.ERROR)
       return internalResponse(
