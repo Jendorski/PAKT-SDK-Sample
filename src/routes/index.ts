@@ -5,6 +5,7 @@ import chatRouter from "./chat";
 import collectionRouter from "./collection";
 import fileRouter from "./file";
 import inviteRouter from "./invite";
+import reviewRouter from "./review";
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.use("/auth", authRouter);
 router.use("/chat", chatRouter);
 router.use("/file", fileRouter);
 router.use("/invite", inviteRouter);
+router.use("/review", reviewRouter);
 router.use("/account", accountRouter);
 
 export default router;

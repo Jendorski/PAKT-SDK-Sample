@@ -10,6 +10,7 @@ import api from "./routes/index";
 import morganMiddleware from "./utils/morgan";
 import Utils from "./utils/response";
 
+//"file:../../PaktSDK",
 const { success } = Utils;
 
 dotenv.config();
@@ -30,6 +31,8 @@ declare global {
     }
   }
 }
+
+//"pakt-sdk": "file:../../PaktSDK",//"^0.1.32",
 
 app.options("*", cors());
 
