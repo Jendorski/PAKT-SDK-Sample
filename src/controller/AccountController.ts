@@ -11,26 +11,33 @@ const { success, failed } = Utils;
 
 const AccountController = {
   fetchUsers: async (req: Request, res: Response) => {
-    const resp = await getUsers({ ...req.query });
+    const auth = req.headers.authorization;
+    const resp = await getUsers(String(auth), { ...req.query });
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   fetchAUser: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await getAUser(id);
+    const auth = req.headers.authorization;
+    const resp = await getAUser(String(auth), id);
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   fetchUser: async (req: Request, res: Response) => {
-    const resp = await getUser();
+    const auth = req.headers.authorization;
+    const resp = await getUser(String(auth));
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   updateAnAccount: async (req: Request, res: Response) => {
-    const resp = await updateAccount({ ...req.body });
+    const auth = req.headers.authorization;
+    const resp = await updateAccount({
+      payload: { ...req.body },
+      authToken: String(auth),
+    });
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

@@ -7,9 +7,15 @@ import {
 } from "pakt-sdk";
 import { internalResponse } from "../utils";
 
-export const sendInvite = async ({ payload }: { payload: SendInviteDto }) => {
+export const sendInvite = async ({
+  authToken,
+  payload,
+}: {
+  authToken: string;
+  payload: SendInviteDto;
+}) => {
   try {
-    const send = await init.invite.sendInvite(payload);
+    const send = await init.invite.sendInvite(authToken, payload);
     if (send.status === Status.ERROR)
       return internalResponse(
         true,
@@ -29,9 +35,9 @@ export const sendInvite = async ({ payload }: { payload: SendInviteDto }) => {
   }
 };
 
-export const acceptInvite = async (inviteId: string) => {
+export const acceptInvite = async (authToken: string, inviteId: string) => {
   try {
-    const accept = await init.invite.acceptInvite(inviteId);
+    const accept = await init.invite.acceptInvite(authToken, inviteId);
     if (accept.status === Status.ERROR)
       return internalResponse(
         true,
@@ -46,9 +52,12 @@ export const acceptInvite = async (inviteId: string) => {
   }
 };
 
-export const declineInvite = async (inviteId: string) => {
+export const declineInvite = async (authToken: string, inviteId: string) => {
   try {
-    const decline: ResponseDto<{}> = await init.invite.declineInvite(inviteId);
+    const decline: ResponseDto<{}> = await init.invite.declineInvite(
+      authToken,
+      inviteId
+    );
     if (decline.status === Status.ERROR)
       return internalResponse(
         true,
@@ -69,6 +78,7 @@ export const declineInvite = async (inviteId: string) => {
 };
 
 export const getAllInvites = async (
+  authToken: string,
   filter: Record<string, any> | IInviteDto
 ) => {
   try {
@@ -77,7 +87,7 @@ export const getAllInvites = async (
     //   reciever: "12345678909",
     //   status: "pending",
     // };
-    const gets = await init.invite.getAll(filter);
+    const gets = await init.invite.getAll(authToken, filter);
     if (gets.status === Status.ERROR)
       return internalResponse(true, Number(422), String(gets.message), gets);
     return internalResponse(false, Number(200), String(gets.message), gets);
@@ -87,9 +97,10 @@ export const getAllInvites = async (
   }
 };
 
-export const getAnInvite = async (inviteId: string) => {
+export const getAnInvite = async (authToken: string, inviteId: string) => {
   try {
     const anInvite: ResponseDto<IInviteDto> = await init.invite.getAnInvite(
+      authToken,
       inviteId
     );
     const { _id, data } = anInvite.data;

@@ -12,7 +12,9 @@ const { success, failed } = Utils;
 const BookmarkController = {
   create: async (req: Request, res: Response) => {
     const { reference, type } = req.body;
+    const auth = req.headers.authorization;
     const resp = await createBookmark({
+      authToken: String(auth),
       payload: {
         reference,
         type,
@@ -25,21 +27,24 @@ const BookmarkController = {
   },
   getAll: async (req: Request, res: Response) => {
     const filter = { ...req.query };
-    const resp = await fetchBookmarks(filter);
+    const auth = req.headers.authorization;
+    const resp = await fetchBookmarks(String(auth), filter);
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await fetchABookMark(id);
+    const auth = req.headers.authorization;
+    const resp = await fetchABookMark(String(auth), id);
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   deleteBookmark: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await deleteABookmark(id);
+    const auth = req.headers.authorization;
+    const resp = await deleteABookmark(String(auth), id);
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

@@ -9,7 +9,13 @@ import { internalResponse } from "../utils";
 
 const TAG = "services/review";
 
-export const addReview = async ({ review }: { review: AddReviewDto }) => {
+export const addReview = async ({
+  authToken,
+  review,
+}: {
+  authToken: string;
+  review: AddReviewDto;
+}) => {
   try {
     // const sampleReview: AddReviewDto = {
     //   review: "Excellent work done",
@@ -17,7 +23,7 @@ export const addReview = async ({ review }: { review: AddReviewDto }) => {
     //   collectionId: "64fa1d5f64d7ee50b86ce6d0",
     //   receiver: "64ff1592db081228cc9bdafd",
     // };
-    const add = await init.review.addReview(review);
+    const add = await init.review.addReview(authToken, review);
     if (add.status === Status.ERROR)
       return internalResponse(true, Number(422), String(add.message), add);
     return internalResponse(false, Number(200), String(add.message), add);
@@ -28,8 +34,10 @@ export const addReview = async ({ review }: { review: AddReviewDto }) => {
 };
 
 export const viewAllReviews = async ({
+  authToken,
   filter,
 }: {
+  authToken: string;
   filter: FilterReviewDto;
 }) => {
   try {
@@ -37,6 +45,7 @@ export const viewAllReviews = async ({
       userId: "12345678909876543",
     };
     const reviews: ResponseDto<FindReviewDto> = await init.review.viewAll(
+      authToken,
       filter ?? sampleFilter
     );
     if (reviews.status === Status.ERROR)

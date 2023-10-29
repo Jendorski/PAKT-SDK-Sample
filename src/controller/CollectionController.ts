@@ -14,6 +14,7 @@ const { success, failed } = Utils;
 const CollectionController = {
   create: async (req: Request, res: Response) => {
     const { name, description, isPrivate, deliveryDate, meta, type } = req.body;
+    const auth = req.headers.authorization;
     const payload: CreateCollectionDto = {
       name,
       type,
@@ -22,7 +23,7 @@ const CollectionController = {
       isPrivate,
       meta,
     };
-    const resp = await createCollection({ payload });
+    const resp = await createCollection({ authToken: String(auth), payload });
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
@@ -30,20 +31,26 @@ const CollectionController = {
   createMany: async (req: Request, res: Response) => {},
   getAll: async (req: Request, res: Response) => {
     console.log({ filter: { ...req.query } });
-    const resp = await fetchCollections({ filter: { ...req.query } });
+    const auth = req.headers.authorization;
+    const resp = await fetchCollections({
+      filter: { ...req.query },
+      authToken: String(auth),
+    });
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   getACollection: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await fetchACollection(id);
+    const auth = req.headers.authorization;
+    const resp = await fetchACollection(String(auth), id);
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   update: async (req: Request, res: Response) => {
     const id = req.params.id;
+    const auth = req.headers.authorization;
     const {
       name,
       description,
@@ -62,7 +69,7 @@ const CollectionController = {
       type,
       attachments,
     };
-    const resp = await updateCollection(id, payload);
+    const resp = await updateCollection(id, payload, String(auth));
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
@@ -70,7 +77,8 @@ const CollectionController = {
   updateMany: async (req: Request, res: Response) => {},
   deleteACollection: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await deleteCollection(id);
+    const auth = req.headers.authorization;
+    const resp = await deleteCollection(id, String(auth));
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

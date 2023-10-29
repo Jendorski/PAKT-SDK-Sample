@@ -10,13 +10,20 @@ import { internalResponse } from "../utils";
 
 const TAG = "services/upload";
 
-export const fileUpload = async ({ file }: { file: any }) => {
+export const fileUpload = async ({
+  authToken,
+  file,
+}: {
+  authToken: string;
+  file: any;
+}) => {
   try {
     console.log({ theFile: file });
     const filePayload: CreateFileUpload = {
       file,
     };
     const upload: ResponseDto<IUploadDto> = await init.file.fileUpload(
+      authToken,
       filePayload
     );
     if (upload.status === Status.ERROR)
@@ -33,14 +40,18 @@ export const fileUpload = async ({ file }: { file: any }) => {
   }
 };
 
-export const fetchFileUploads = async (filter: FilterUploadDto) => {
+export const fetchFileUploads = async (
+  authToken: string,
+  filter: FilterUploadDto
+) => {
   try {
     // const sampleFilter = {
     //   page: "1",
     //   limit: "20",
     // };
-    const uploads: ResponseDto<FindUploadDto> =
-      await init.file.getFileUploads();
+    const uploads: ResponseDto<FindUploadDto> = await init.file.getFileUploads(
+      authToken
+    );
     console.log({ uploads });
     if (uploads.status === Status.ERROR)
       return internalResponse(
@@ -61,9 +72,9 @@ export const fetchFileUploads = async (filter: FilterUploadDto) => {
   }
 };
 
-export const fetchAFileUpload = async (id: string) => {
+export const fetchAFileUpload = async (authToken: string, id: string) => {
   try {
-    const anUpload = await init.file.getAFileUpload(id);
+    const anUpload = await init.file.getAFileUpload(authToken, id);
     if (anUpload.status === Status.ERROR)
       return internalResponse(
         true,

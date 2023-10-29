@@ -13,13 +13,15 @@ const { internalResponse } = Utils;
 const TAG = "bookmark";
 
 export const createBookmark = async ({
+  authToken,
   payload,
 }: {
+  authToken: string;
   payload: createBookMarkDto;
 }) => {
   try {
     const created: ResponseDto<ICollectionBookmarkDto> =
-      await init.bookmark.create(payload);
+      await init.bookmark.create(authToken, payload);
 
     if (created.status === Status.ERROR)
       return internalResponse(
@@ -40,11 +42,14 @@ export const createBookmark = async ({
   }
 };
 
-export const fetchBookmarks = async (filter: filterBookmarkDto) => {
+export const fetchBookmarks = async (
+  authToken: string,
+  filter: filterBookmarkDto
+) => {
   //filter by the type.
   try {
     const bookmarks: ResponseDto<FindCollectionBookMarkDto> =
-      await init.bookmark.getAll(filter);
+      await init.bookmark.getAll(authToken, filter);
     if (bookmarks.status === Status.ERROR)
       return internalResponse(
         true,
@@ -64,10 +69,10 @@ export const fetchBookmarks = async (filter: filterBookmarkDto) => {
   }
 };
 
-export const fetchABookMark = async (id: string) => {
+export const fetchABookMark = async (authToken: string, id: string) => {
   try {
     const aBookmark: ResponseDto<ICollectionBookmarkDto> =
-      await init.bookmark.getById(id);
+      await init.bookmark.getById(authToken, id);
     if (aBookmark.status === Status.ERROR)
       return internalResponse(
         true,
@@ -87,9 +92,9 @@ export const fetchABookMark = async (id: string) => {
   }
 };
 
-export const deleteABookmark = async (id: string) => {
+export const deleteABookmark = async (authToken: string, id: string) => {
   try {
-    const deleted: ResponseDto<{}> = await init.bookmark.delete(id);
+    const deleted: ResponseDto<{}> = await init.bookmark.delete(authToken, id);
     if (deleted.status === Status.ERROR)
       return internalResponse(
         true,

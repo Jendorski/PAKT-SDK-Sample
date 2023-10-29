@@ -7,7 +7,11 @@ const { failed, success } = Utils;
 const ReviewController = {
   create: async (req: Request, res: Response) => {},
   getReviews: async (req: Request, res: Response) => {
-    const resp = await viewAllReviews({ filter: { ...req.query } });
+    const auth = req.headers.authorization;
+    const resp = await viewAllReviews({
+      authToken: String(auth),
+      filter: { ...req.query },
+    });
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

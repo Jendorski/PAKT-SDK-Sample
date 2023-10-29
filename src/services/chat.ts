@@ -3,9 +3,9 @@ import { internalResponse } from "../utils";
 
 const TAG = "services/chat";
 
-export const getChatMessages = async () => {
+export const getChatMessages = async (authToken: string) => {
   try {
-    const messsages = await init.chat.getUserMessages();
+    const messsages = await init.chat.getUserMessages(authToken);
     if (messsages.status === Status.ERROR)
       return internalResponse(
         true,

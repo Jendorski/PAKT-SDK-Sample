@@ -16,8 +16,10 @@ const TAG = "services/collection";
 
 export const createCollection = async ({
   payload,
+  authToken,
 }: {
   payload: CreateCollectionDto;
+  authToken: string;
 }) => {
   try {
     /**
@@ -41,6 +43,7 @@ export const createCollection = async ({
     // };
 
     const create: ResponseDto<ICollectionDto> = await init.collection.create(
+      authToken,
       payload
     );
     if (create.status === Status.ERROR)
@@ -62,8 +65,10 @@ export const createCollection = async ({
  */
 export const createMany = async ({
   collections,
+  authToken,
 }: {
   collections: CreateManyCollectionDto;
+  authToken: string;
 }) => {
   try {
     /**
@@ -92,7 +97,7 @@ export const createMany = async ({
     //   ],
     // };
     const many: ResponseDto<ICollectionDto[]> =
-      await init.collection.createMany(collections);
+      await init.collection.createMany(authToken, collections);
     if (many.status === Status.ERROR)
       return internalResponse(true, Number(422), String(many.message), many);
     return internalResponse(false, Number(200), String(many.message), many);
@@ -108,12 +113,15 @@ export const createMany = async ({
  */
 export const fetchCollections = async ({
   filter,
+  authToken,
 }: {
   filter: filterCollectionDto;
+  authToken: string;
 }) => {
   try {
     console.log({ filterInner: { ...filter } });
     const fetch: ResponseDto<FindCollectionDto> = await init.collection.getAll(
+      authToken,
       filter
     );
     if (fetch.status === Status.ERROR)
@@ -135,10 +143,13 @@ export const fetchCollections = async ({
   }
 };
 
-export const fetchACollection = async (collectionId: string) => {
+export const fetchACollection = async (
+  authToken: string,
+  collectionId: string
+) => {
   try {
     const aCollection: ResponseDto<ICollectionDto> =
-      await init.collection.getById(collectionId);
+      await init.collection.getById(authToken, collectionId);
     if (aCollection.status === Status.ERROR)
       return internalResponse(
         true,
@@ -159,10 +170,13 @@ export const fetchACollection = async (collectionId: string) => {
 };
 
 /**This feature is used to get the available collection types */
-export const fetchCollectionTypes = async (filter: filterCollectionDto) => {
+export const fetchCollectionTypes = async (
+  authToken: string,
+  filter: filterCollectionDto
+) => {
   try {
     const types: ResponseDto<FindCollectionTypeDto> =
-      await init.collection.getTypes(filter);
+      await init.collection.getTypes(authToken, filter);
     if (types.status === Status.ERROR)
       return internalResponse(true, Number(422), String(types.message), types);
     return internalResponse(false, Number(200), String(types.message), types);
@@ -174,7 +188,8 @@ export const fetchCollectionTypes = async (filter: filterCollectionDto) => {
 
 export const updateCollection = async (
   id: string,
-  payload: UpdateCollectionDto
+  payload: UpdateCollectionDto,
+  authToken: string
 ) => {
   try {
     // const samplePayload: UpdateCollectionDto = {
@@ -192,7 +207,11 @@ export const updateCollection = async (
     //   attachments: ["123456789098765", "09876543456789087"],
     //   meta: {},
     // };
-    const update = await init.collection.updateCollection(id, payload);
+    const update = await init.collection.updateCollection(
+      authToken,
+      id,
+      payload
+    );
     if (update.status === Status.ERROR)
       return internalResponse(
         true,
@@ -206,9 +225,15 @@ export const updateCollection = async (
   }
 };
 
-export const deleteCollection = async (collectionId: string) => {
+export const deleteCollection = async (
+  authToken: string,
+  collectionId: string
+) => {
   try {
-    const deleted = await init.collection.deleteACollection(collectionId);
+    const deleted = await init.collection.deleteACollection(
+      authToken,
+      collectionId
+    );
     if (deleted.status === Status.ERROR)
       return internalResponse(
         true,
@@ -229,6 +254,7 @@ export const deleteCollection = async (collectionId: string) => {
 };
 
 export const updateManyCollections = async (
+  authToken: string,
   collections: UpdateManyCollectionsDto
 ) => {
   try {
@@ -260,6 +286,7 @@ export const updateManyCollections = async (
     //   ],
     // };
     const updatedMany = await init.collection.updateManyCollections(
+      authToken,
       collections
     );
     if (updatedMany.status === Status.ERROR)

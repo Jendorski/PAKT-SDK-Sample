@@ -1,10 +1,13 @@
 import { FindNotificationDto, ResponseDto, Status } from "pakt-sdk";
 import { internalResponse } from "../utils";
 
-export const getAllNotifications = async (filter?: Record<string, any>) => {
+export const getAllNotifications = async (
+  authToken: string,
+  filter?: Record<string, any>
+) => {
   try {
     const notifications: ResponseDto<FindNotificationDto> =
-      await init.notifications.getAll(filter);
+      await init.notifications.getAll(authToken, filter);
     if (notifications.status === Status.ERROR)
       return internalResponse(
         true,

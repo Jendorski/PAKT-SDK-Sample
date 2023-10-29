@@ -12,14 +12,17 @@ import { internalResponse } from "../utils";
 const TAG = "services/account";
 
 export const changePassword = async ({
+  authToken,
   oldPassword,
   newPassword,
 }: {
+  authToken: string;
   oldPassword: string;
   newPassword: string;
 }) => {
   try {
     const change: ResponseDto<IUser> = await init.account.changePassword(
+      authToken,
       oldPassword,
       newPassword
     );
@@ -38,8 +41,10 @@ export const changePassword = async ({
 };
 
 export const updateAccount = async ({
+  authToken,
   payload,
 }: {
+  authToken: string;
   payload: updateUserDto;
 }) => {
   try {
@@ -55,7 +60,8 @@ export const updateAccount = async ({
     //   userName: "",
     // };
     const update: ResponseDto<IUser> = await init.account.updateAccount(
-      payload
+      payload,
+      authToken
     );
     if (update.status === Status.ERROR)
       return internalResponse(
@@ -71,9 +77,9 @@ export const updateAccount = async ({
   }
 };
 
-export const getUser = async () => {
+export const getUser = async (authToken: string) => {
   try {
-    const get: ResponseDto<IUser> = await init.account.getUser();
+    const get: ResponseDto<IUser> = await init.account.getUser(authToken);
     if (get.status === Status.ERROR)
       return internalResponse(true, Number(422), String(get.message), get);
     return internalResponse(false, Number(200), String(get.message), get);
@@ -83,9 +89,12 @@ export const getUser = async () => {
   }
 };
 
-export const getAUser = async (userId: string) => {
+export const getAUser = async (authToken: string, userId: string) => {
   try {
-    const get: ResponseDto<IUser> = await init.account.getAUser(userId);
+    const get: ResponseDto<IUser> = await init.account.getAUser(
+      authToken,
+      userId
+    );
     if (get.status === Status.ERROR)
       return internalResponse(true, Number(422), String(get.message), get);
     return internalResponse(false, Number(200), String(get.message), get);
@@ -95,14 +104,20 @@ export const getAUser = async (userId: string) => {
   }
 };
 
-export const getUsers = async (filter?: Record<string, any>) => {
+export const getUsers = async (
+  authToken: string,
+  filter?: Record<string, any>
+) => {
   try {
     const sampleFilter: FilterUserDto = {
       type: "recipient",
       tags: ["UI/UX", "NodeJS", "Typescript"],
     };
     console.log({ sampleFilter });
-    const users: ResponseDto<FindUsers> = await init.account.getUsers(filter);
+    const users: ResponseDto<FindUsers> = await init.account.getUsers(
+      authToken,
+      filter
+    );
     if (users.status === Status.ERROR)
       return internalResponse(true, Number(422), String(users.message), users);
     return internalResponse(false, Number(200), String(users.message), users);
@@ -112,9 +127,9 @@ export const getUsers = async (filter?: Record<string, any>) => {
   }
 };
 
-export const initiateTwoFA = async (type: TwoFATypeDto) => {
+export const initiateTwoFA = async (authToken: string, type: TwoFATypeDto) => {
   try {
-    const initiate = await init.account.initate2FA(type);
+    const initiate = await init.account.initate2FA(type, authToken);
     if (initiate.status === Status.ERROR)
       return internalResponse(
         true,
@@ -134,9 +149,9 @@ export const initiateTwoFA = async (type: TwoFATypeDto) => {
   }
 };
 
-export const activateTwoFA = async (code: string) => {
+export const activateTwoFA = async (code: string, authToken: string) => {
   try {
-    const activate = await init.account.activate2FA(code);
+    const activate = await init.account.activate2FA(code, authToken);
     if (activate.status === Status.ERROR)
       return internalResponse(
         true,
@@ -156,9 +171,9 @@ export const activateTwoFA = async (code: string) => {
   }
 };
 
-export const deactivateTwoFA = async (code: string) => {
+export const deactivateTwoFA = async (code: string, authToken: string) => {
   try {
-    const deactivate = await init.account.deactivate2FA(code);
+    const deactivate = await init.account.deactivate2FA(code, authToken);
     if (deactivate.status === Status.ERROR)
       return internalResponse(
         true,
@@ -178,9 +193,9 @@ export const deactivateTwoFA = async (code: string) => {
   }
 };
 
-export const sendEmailTwoFA = async () => {
+export const sendEmailTwoFA = async (authToken: string) => {
   try {
-    const sendEmailTwoFA = await init.account.sendEmailTwoFA();
+    const sendEmailTwoFA = await init.account.sendEmailTwoFA(authToken);
     if (sendEmailTwoFA.status === Status.ERROR)
       return internalResponse(
         true,
@@ -200,9 +215,9 @@ export const sendEmailTwoFA = async () => {
   }
 };
 
-export const logout = async () => {
+export const logout = async (authToken: string) => {
   try {
-    const logUserOut = await init.account.logout();
+    const logUserOut = await init.account.logout(authToken);
     if (logUserOut.status === Status.ERROR)
       return internalResponse(
         true,

@@ -11,9 +11,11 @@ import { internalResponse } from "../utils";
 
 const TAG = "services/wallet";
 
-export const fetchWallets = async () => {
+export const fetchWallets = async (authToken: string) => {
   try {
-    const wallets: ResponseDto<IWalletDto[]> = await init.wallet.getWallets();
+    const wallets: ResponseDto<IWalletDto[]> = await init.wallet.getWallets(
+      authToken
+    );
     if (wallets.status === Status.ERROR)
       return internalResponse(
         true,
@@ -33,10 +35,11 @@ export const fetchWallets = async () => {
   }
 };
 
-export const fetchWalletData = async () => {
+export const fetchWalletData = async (authToken: string) => {
   try {
-    const walletData: ResponseDto<IWalletDto> =
-      await init.wallet.getWalletData();
+    const walletData: ResponseDto<IWalletDto> = await init.wallet.getWalletData(
+      authToken
+    );
     if (walletData.status === Status.ERROR)
       return internalResponse(
         true,
@@ -56,10 +59,10 @@ export const fetchWalletData = async () => {
   }
 };
 
-export const getTransactions = async () => {
+export const getTransactions = async (authToken: string) => {
   try {
     const txns: ResponseDto<FindTransactionsDto> =
-      await init.wallet.getTransactions();
+      await init.wallet.getTransactions(authToken);
     if (txns.status === Status.ERROR)
       return internalResponse(true, Number(422), String(txns.message), txns);
     return internalResponse(false, Number(200), String(txns.message), txns);
@@ -69,10 +72,10 @@ export const getTransactions = async () => {
   }
 };
 
-export const getTransactionsStats = async () => {
+export const getTransactionsStats = async (authToken: string) => {
   try {
     const txnStats: ResponseDto<ITransactionStatsDto[]> =
-      await init.wallet.getTransactionStats();
+      await init.wallet.getTransactionStats(authToken);
     if (txnStats.status === Status.ERROR)
       return internalResponse(
         true,
@@ -92,10 +95,10 @@ export const getTransactionsStats = async () => {
   }
 };
 
-export const getATransaction = async (id: string) => {
+export const getATransaction = async (authToken: string, id: string) => {
   try {
     const aTxn: ResponseDto<ITransactionDto> =
-      await init.wallet.getATransaction(id);
+      await init.wallet.getATransaction(authToken, id);
     if (aTxn.status === Status.ERROR)
       return internalResponse(true, Number(422), String(aTxn.message), aTxn);
     return internalResponse(false, Number(200), String(aTxn.message), aTxn);
@@ -105,10 +108,10 @@ export const getATransaction = async (id: string) => {
   }
 };
 
-export const getExchange = async () => {
+export const getExchange = async (authToken: string) => {
   try {
     const exchange: ResponseDto<IWalletExchangeDto> =
-      await init.wallet.getExchange();
+      await init.wallet.getExchange(authToken);
     if (exchange.status === Status.ERROR)
       return internalResponse(
         true,

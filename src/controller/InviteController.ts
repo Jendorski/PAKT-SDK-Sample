@@ -13,7 +13,9 @@ const { success, failed } = Utils;
 const InviteController = {
   sendInvite: async (req: Request, res: Response) => {
     const { collectionId, recipient } = req.body;
+    const auth = req.headers.authorization;
     const resp = await sendInvite({
+      authToken: String(auth),
       payload: {
         collection: collectionId,
         recipient,
@@ -24,28 +26,32 @@ const InviteController = {
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   getInvites: async (req: Request, res: Response) => {
-    const resp = await getAllInvites({});
+    const auth = req.headers.authorization;
+    const resp = await getAllInvites(String(auth), {});
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   getAnInvite: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await getAnInvite(id);
+    const auth = req.headers.authorization;
+    const resp = await getAnInvite(String(auth), id);
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   acceptInvite: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await acceptInvite(id);
+    const auth = req.headers.authorization;
+    const resp = await acceptInvite(String(auth), id);
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
   declineInvite: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const resp = await declineInvite(id);
+    const auth = req.headers.authorization;
+    const resp = await declineInvite(String(auth), id);
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

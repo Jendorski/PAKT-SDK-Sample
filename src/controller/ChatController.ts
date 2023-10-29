@@ -6,7 +6,8 @@ const { success, failed } = Utils;
 
 const ChatController = {
   getMessages: async (req: Request, res: Response) => {
-    const resp = await getChatMessages();
+    const auth = req.headers.authorization;
+    const resp = await getChatMessages(String(auth));
 
     if (resp?.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
