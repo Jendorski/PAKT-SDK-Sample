@@ -7,6 +7,7 @@ import {
   fetchCollections,
   updateCollection,
 } from "../services/collection";
+import { removeString } from "../utils/helper";
 import Utils from "../utils/response";
 
 const { success, failed } = Utils;
@@ -14,7 +15,7 @@ const { success, failed } = Utils;
 const CollectionController = {
   create: async (req: Request, res: Response) => {
     const { name, description, isPrivate, deliveryDate, meta, type } = req.body;
-    const auth = req.headers.authorization;
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
     const payload: CreateCollectionDto = {
       name,
       type,
@@ -31,7 +32,7 @@ const CollectionController = {
   createMany: async (req: Request, res: Response) => {},
   getAll: async (req: Request, res: Response) => {
     console.log({ filter: { ...req.query } });
-    const auth = req.headers.authorization;
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
     const resp = await fetchCollections({
       filter: { ...req.query },
       authToken: String(auth),
@@ -42,7 +43,7 @@ const CollectionController = {
   },
   getACollection: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const auth = req.headers.authorization;
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
     const resp = await fetchACollection(String(auth), id);
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
@@ -50,7 +51,7 @@ const CollectionController = {
   },
   update: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const auth = req.headers.authorization;
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
     const {
       name,
       description,
@@ -77,7 +78,7 @@ const CollectionController = {
   updateMany: async (req: Request, res: Response) => {},
   deleteACollection: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const auth = req.headers.authorization;
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
     const resp = await deleteCollection(id, String(auth));
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);

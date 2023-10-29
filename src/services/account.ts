@@ -92,8 +92,8 @@ export const getUser = async (authToken: string) => {
 export const getAUser = async (authToken: string, userId: string) => {
   try {
     const get: ResponseDto<IUser> = await init.account.getAUser(
-      authToken,
-      userId
+      userId,
+      authToken
     );
     if (get.status === Status.ERROR)
       return internalResponse(true, Number(422), String(get.message), get);
