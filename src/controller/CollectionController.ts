@@ -14,7 +14,16 @@ const { success, failed } = Utils;
 
 const CollectionController = {
   create: async (req: Request, res: Response) => {
-    const { name, description, isPrivate, deliveryDate, meta, type } = req.body;
+    const {
+      name,
+      description,
+      isPrivate,
+      deliveryDate,
+      meta,
+      type,
+      category,
+      tags,
+    } = req.body;
     const auth = removeString(String(req.headers.authorization), "Bearer ");
     const payload: CreateCollectionDto = {
       name,
@@ -23,6 +32,8 @@ const CollectionController = {
       deliveryDate,
       isPrivate,
       meta,
+      category,
+      tags,
     };
     const resp = await createCollection({ authToken: String(auth), payload });
     if (resp.error)

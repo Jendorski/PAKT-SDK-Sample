@@ -72,7 +72,8 @@ export const fetchBookmarks = async (
 export const fetchABookMark = async (authToken: string, id: string) => {
   try {
     const aBookmark: ResponseDto<ICollectionBookmarkDto> =
-      await init.bookmark.getById(authToken, id);
+      await init.bookmark.getById(authToken, id, {});
+    console.log({ aBookmark });
     if (aBookmark.status === Status.ERROR)
       return internalResponse(
         true,
