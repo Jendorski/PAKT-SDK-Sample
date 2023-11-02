@@ -88,6 +88,7 @@ export const getAllInvites = async (
     //   status: "pending",
     // };
     const gets = await init.invite.getAll(authToken, filter);
+    console.log({ gets });
     if (gets.status === Status.ERROR)
       return internalResponse(true, Number(422), String(gets.message), gets);
     return internalResponse(false, Number(200), String(gets.message), gets);

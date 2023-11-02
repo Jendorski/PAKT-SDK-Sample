@@ -127,13 +127,13 @@ export const fetchCollections = async ({
     if (fetch.status === Status.ERROR)
       return internalResponse(
         true,
-        Number(422),
+        Number(fetch.code),
         String(`${fetch.status}_${fetch.message}`),
         fetch
       );
     return internalResponse(
       false,
-      Number(200),
+      Number(fetch.code),
       String(fetch.message),
       fetch.data
     );

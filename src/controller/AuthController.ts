@@ -14,7 +14,7 @@ const AuthController = {
   login: async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if (!email) return failed(res, null, "Supply email", 400);
-    if (!password) return failed(res, null, "Supply password", 400);
+    //if (!password) return failed(res, null, "Supply password", 400);
 
     const resp = await login({ email, password });
     if (resp?.error)

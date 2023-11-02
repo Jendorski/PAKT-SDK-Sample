@@ -35,29 +35,29 @@ export const fetchWallets = async (authToken: string) => {
   }
 };
 
-export const fetchWalletData = async (authToken: string) => {
-  try {
-    const walletData: ResponseDto<IWalletDto> = await init.wallet.getWalletData(
-      authToken
-    );
-    if (walletData.status === Status.ERROR)
-      return internalResponse(
-        true,
-        Number(422),
-        String(walletData.message),
-        walletData
-      );
-    return internalResponse(
-      false,
-      Number(200),
-      String(walletData.message),
-      walletData
-    );
-  } catch (error: Error | unknown) {
-    console.error(`${TAG}::${String(error)}`);
-    return internalResponse(true, 422, String(error), null);
-  }
-};
+// export const fetchWalletData = async (authToken: string) => {
+//   try {
+//     const walletData: ResponseDto<IWalletDto> = await init.wallet.getWalletData(
+//       authToken
+//     );
+//     if (walletData.status === Status.ERROR)
+//       return internalResponse(
+//         true,
+//         Number(422),
+//         String(walletData.message),
+//         walletData
+//       );
+//     return internalResponse(
+//       false,
+//       Number(200),
+//       String(walletData.message),
+//       walletData
+//     );
+//   } catch (error: Error | unknown) {
+//     console.error(`${TAG}::${String(error)}`);
+//     return internalResponse(true, 422, String(error), null);
+//   }
+// };
 
 export const getTransactions = async (authToken: string) => {
   try {

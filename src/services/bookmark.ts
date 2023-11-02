@@ -23,7 +23,7 @@ export const createBookmark = async ({
     const created: ResponseDto<ICollectionBookmarkDto> =
       await init.bookmark.create(authToken, payload);
 
-    if (created.status === Status.ERROR)
+    if (created.status === Status.ERROR || Number(created.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -50,7 +50,7 @@ export const fetchBookmarks = async (
   try {
     const bookmarks: ResponseDto<FindCollectionBookMarkDto> =
       await init.bookmark.getAll(authToken, filter);
-    if (bookmarks.status === Status.ERROR)
+    if (bookmarks.status === Status.ERROR || Number(bookmarks.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -74,7 +74,7 @@ export const fetchABookMark = async (authToken: string, id: string) => {
     const aBookmark: ResponseDto<ICollectionBookmarkDto> =
       await init.bookmark.getById(authToken, id, {});
     console.log({ aBookmark });
-    if (aBookmark.status === Status.ERROR)
+    if (aBookmark.status === Status.ERROR || Number(aBookmark.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -96,7 +96,7 @@ export const fetchABookMark = async (authToken: string, id: string) => {
 export const deleteABookmark = async (authToken: string, id: string) => {
   try {
     const deleted: ResponseDto<{}> = await init.bookmark.delete(authToken, id);
-    if (deleted.status === Status.ERROR)
+    if (deleted.status === Status.ERROR || Number(deleted.code) !== 200)
       return internalResponse(
         true,
         Number(422),

@@ -80,7 +80,8 @@ export const updateAccount = async ({
 export const getUser = async (authToken: string) => {
   try {
     const get: ResponseDto<IUser> = await init.account.getUser(authToken);
-    if (get.status === Status.ERROR)
+    console.log({ get: { ...get } });
+    if (Number(get.code) > 226)
       return internalResponse(true, Number(422), String(get.message), get);
     return internalResponse(false, Number(200), String(get.message), get);
   } catch (error: Error | unknown) {
@@ -95,8 +96,9 @@ export const getAUser = async (authToken: string, userId: string) => {
       userId,
       authToken
     );
-    if (get.status === Status.ERROR)
-      return internalResponse(true, Number(422), String(get.message), get);
+    console.log({ aUser: { ...get } });
+    if (Number(get.code) > 226)
+      return internalResponse(true, Number(get.code), String(get.message), get);
     return internalResponse(false, Number(200), String(get.message), get);
   } catch (error: Error | unknown) {
     console.error(`${TAG}::${String(error)}`);

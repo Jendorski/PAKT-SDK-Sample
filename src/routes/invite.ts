@@ -9,7 +9,7 @@ const router = Router();
 
 router.post("/", controllerWrapper(sendInvite));
 router.post("/:id", controllerWrapper(acceptInvite));
-router.post("/:id", controllerWrapper(declineInvite));
+router.patch("/:id", controllerWrapper(declineInvite));
 router.get("/", controllerWrapper(getInvites));
 router.get("/:id", controllerWrapper(getAnInvite));
 

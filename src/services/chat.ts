@@ -6,7 +6,7 @@ const TAG = "services/chat";
 export const getChatMessages = async (authToken: string) => {
   try {
     const messsages = await init.chat.getUserMessages(authToken);
-    if (messsages.status === Status.ERROR)
+    if (messsages.status === Status.ERROR || Number(messsages.code) !== 200)
       return internalResponse(
         true,
         Number(422),

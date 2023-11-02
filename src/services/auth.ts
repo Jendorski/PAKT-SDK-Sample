@@ -36,7 +36,7 @@ export const registration = async ({
       payload
     );
 
-    if (register.status === Status.ERROR)
+    if (register.status === Status.ERROR || Number(register.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -66,7 +66,10 @@ export const verifyAccount = async ({
     const verifyAccount: ResponseDto<AccountVerifyDto> =
       await init.auth.verifyAccount(tempAuthToken, token);
 
-    if (verifyAccount.status === Status.ERROR)
+    if (
+      verifyAccount.status === Status.ERROR ||
+      Number(verifyAccount.code) !== 200
+    )
       return internalResponse(
         true,
         Number(422),
@@ -93,18 +96,21 @@ export const login = async ({
   password: string;
 }) => {
   try {
-    const login: ResponseDto<LoginDto> = await init.auth.login(email, password);
-    console.log({ login });
-    if (login.status === Status.ERROR)
+    const login: ResponseDto<LoginDto | {}> = await init.auth.login(
+      email,
+      password
+    );
+    console.log({ loginResp: { ...login } });
+    if (login.status === Status.ERROR || Number(login.code) !== 200)
       return internalResponse(
         true,
-        Number(422),
+        Number(login.code),
         String(`${login.status}_${login.message}`),
         login
       );
     return internalResponse(
       false,
-      Number(200),
+      Number(login.code),
       String(login.message),
       login.data
     );
@@ -119,7 +125,7 @@ export const resendVerificationLink = async (email: string) => {
     const resent: ResponseDto<ResetDto> = await init.auth.resendVerifyLink(
       email
     );
-    if (resent.status === Status.ERROR)
+    if (resent.status === Status.ERROR || Number(resent.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -136,7 +142,7 @@ export const resendVerificationLink = async (email: string) => {
 export const resetPassword = async (email: string) => {
   try {
     const reset: ResponseDto<ResetDto> = await init.auth.resetPassword(email);
-    if (reset.status === Status.ERROR)
+    if (reset.status === Status.ERROR || Number(reset.code) !== 200)
       return internalResponse(true, Number(422), String(reset.message), reset);
     return internalResponse(false, Number(200), String(reset.message), reset);
   } catch (error: Error | unknown) {
@@ -160,7 +166,7 @@ export const changePassword = async ({
       tempToken,
       password
     );
-    if (change.status === Status.ERROR)
+    if (change.status === Status.ERROR || Number(change.code) !== 200)
       return internalResponse(
         true,
         Number(422),
@@ -183,7 +189,7 @@ export const validatePasswordToken = async (
       token,
       tempToken
     );
-    if (validate.status === Status.ERROR)
+    if (validate.status === Status.ERROR || Number(validate.code) !== 200)
       return internalResponse(
         true,
         Number(422),
