@@ -124,7 +124,7 @@ export const fetchCollections = async ({
       authToken,
       filter
     );
-    if (fetch.status === Status.ERROR)
+    if (fetch.status === Status.ERROR || Number(fetch.code) > 226)
       return internalResponse(
         true,
         Number(fetch.code),

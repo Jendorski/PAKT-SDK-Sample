@@ -36,7 +36,7 @@ export const registration = async ({
       payload
     );
 
-    if (register.status === Status.ERROR || Number(register.code) !== 200)
+    if (register.status === Status.ERROR || Number(register.code) > 226)
       return internalResponse(
         true,
         Number(422),
@@ -68,7 +68,7 @@ export const verifyAccount = async ({
 
     if (
       verifyAccount.status === Status.ERROR ||
-      Number(verifyAccount.code) !== 200
+      Number(verifyAccount.code) > 226
     )
       return internalResponse(
         true,
@@ -101,7 +101,7 @@ export const login = async ({
       password
     );
     console.log({ loginResp: { ...login } });
-    if (login.status === Status.ERROR || Number(login.code) !== 200)
+    if (login.status === Status.ERROR || Number(login.code) > 226)
       return internalResponse(
         true,
         Number(login.code),
@@ -125,7 +125,7 @@ export const resendVerificationLink = async (email: string) => {
     const resent: ResponseDto<ResetDto> = await init.auth.resendVerifyLink(
       email
     );
-    if (resent.status === Status.ERROR || Number(resent.code) !== 200)
+    if (resent.status === Status.ERROR || Number(resent.code) > 226)
       return internalResponse(
         true,
         Number(422),
@@ -142,7 +142,7 @@ export const resendVerificationLink = async (email: string) => {
 export const resetPassword = async (email: string) => {
   try {
     const reset: ResponseDto<ResetDto> = await init.auth.resetPassword(email);
-    if (reset.status === Status.ERROR || Number(reset.code) !== 200)
+    if (reset.status === Status.ERROR || Number(reset.code) > 226)
       return internalResponse(true, Number(422), String(reset.message), reset);
     return internalResponse(false, Number(200), String(reset.message), reset);
   } catch (error: Error | unknown) {
@@ -189,7 +189,7 @@ export const validatePasswordToken = async (
       token,
       tempToken
     );
-    if (validate.status === Status.ERROR || Number(validate.code) !== 200)
+    if (validate.status === Status.ERROR || Number(validate.code) > 226)
       return internalResponse(
         true,
         Number(422),
