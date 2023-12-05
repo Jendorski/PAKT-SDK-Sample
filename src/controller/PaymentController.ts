@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { createOrder } from "../services/payment";
+import {
+  createOrder,
+  fetchActiveRPCs,
+  fetchPaymentMethods,
+  releaseOrder,
+  validateOrder,
+} from "../services/payment";
 import { removeString } from "../utils/helper";
 import Utils from "../utils/response";
 
@@ -16,9 +22,41 @@ const PaymentController = {
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);
   },
-  validateOrder: async (req: Request, res: Response) => {},
-  releasePayment: async (req: Request, res: Response) => {},
-  activeRPC: async (req: Request, res: Response) => {},
-  paymentMethods: async (req: Request, res: Response) => {},
+  validateOrder: async (req: Request, res: Response) => {
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
+
+    const { collection } = req.body;
+
+    const resp = await validateOrder({ authToken: auth, collection });
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  releasePayment: async (req: Request, res: Response) => {
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
+
+    const { collection, amount } = req.body;
+
+    const resp = await releaseOrder({ authToken: auth, collection, amount });
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  activeRPC: async (req: Request, res: Response) => {
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
+
+    const resp = await fetchActiveRPCs({ authToken: auth });
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
+  paymentMethods: async (req: Request, res: Response) => {
+    const auth = removeString(String(req.headers.authorization), "Bearer ");
+
+    const resp = await fetchPaymentMethods({ authToken: auth });
+    if (resp.error)
+      return failed(res, resp.data, resp.message, resp.statusCode);
+    return success(res, resp.data, resp.message, resp.statusCode);
+  },
 };
 export default PaymentController;
