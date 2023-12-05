@@ -48,3 +48,30 @@ export const getAFeed = async (authToken: string, feedId: string) => {
     return internalResponse(true, 422, String(error), null);
   }
 };
+
+export const dismissAll = async (authToken: string) => {
+  try {
+    const feed: ResponseDto<{}> = await init.feed.dismissAllFeeds(authToken);
+    if (feed.status === Status.ERROR)
+      return internalResponse(true, Number(422), String(feed.message), feed);
+    return internalResponse(false, Number(200), String(feed.message), feed);
+  } catch (error: Error | unknown) {
+    console.error({ error });
+    return internalResponse(true, 422, String(error), null);
+  }
+};
+
+export const dismissAFeed = async (authToken: string, feedId: string) => {
+  try {
+    const feed: ResponseDto<{}> = await init.feed.dismissAFeed(
+      authToken,
+      feedId
+    );
+    if (feed.status === Status.ERROR)
+      return internalResponse(true, Number(422), String(feed.message), feed);
+    return internalResponse(false, Number(200), String(feed.message), feed);
+  } catch (error: Error | unknown) {
+    console.error({ error });
+    return internalResponse(true, 422, String(error), null);
+  }
+};

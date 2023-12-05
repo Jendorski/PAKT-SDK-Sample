@@ -28,7 +28,7 @@ const InviteController = {
   },
   getInvites: async (req: Request, res: Response) => {
     const auth = removeString(String(req.headers.authorization), "Bearer ");
-    const resp = await getAllInvites(String(auth), {});
+    const resp = await getAllInvites(String(auth), { ...req.query });
     if (resp.error)
       return failed(res, resp.data, resp.message, resp.statusCode);
     return success(res, resp.data, resp.message, resp.statusCode);

@@ -75,7 +75,7 @@ export const getTransactions = async (authToken: string) => {
 export const getTransactionsStats = async (authToken: string) => {
   try {
     const txnStats: ResponseDto<ITransactionStatsDto[]> =
-      await init.wallet.getTransactionStats(authToken);
+      await init.wallet.getTransactionStats(authToken, "monthly");
     if (txnStats.status === Status.ERROR)
       return internalResponse(
         true,

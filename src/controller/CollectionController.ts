@@ -71,6 +71,7 @@ const CollectionController = {
       meta,
       type,
       attachments,
+      paymentFee,
     } = req.body;
     const payload = {
       name,
@@ -80,6 +81,7 @@ const CollectionController = {
       meta,
       type,
       attachments,
+      paymentFee,
     };
     const resp = await updateCollection(id, payload, String(auth));
     if (resp.error)

@@ -863,7 +863,7 @@ on-headers@~1.0.2:
   integrity sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==
 
 "pakt-sdk@file:../../PaktSDK":
-  version "0.1.34"
+  version "0.1.38"
   dependencies:
     node-fetch "^2.6.6"
     reflect-metadata "^0.1.13"

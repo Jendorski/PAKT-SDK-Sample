@@ -212,6 +212,7 @@ export const updateCollection = async (
       id,
       payload
     );
+    console.log({ update });
     if (update.status === Status.ERROR)
       return internalResponse(
         true,
