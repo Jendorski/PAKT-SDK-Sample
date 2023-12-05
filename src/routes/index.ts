@@ -12,7 +12,7 @@ import paymentRouter from "./payment";
 import reviewRouter from "./review";
 import withdrawalRouter from "./withdrawal";
 
-const { failed, success } = Utils;
+const { failed } = Utils;
 const router = Router();
 
 router.use("/collection", collectionRouter);
