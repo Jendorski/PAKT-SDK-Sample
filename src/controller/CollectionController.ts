@@ -23,6 +23,7 @@ const CollectionController = {
       type,
       category,
       tags,
+      paymentFee,
     } = req.body;
     const auth = removeString(String(req.headers.authorization), "Bearer ");
     const payload: CreateCollectionDto = {
@@ -34,6 +35,7 @@ const CollectionController = {
       meta,
       category,
       tags,
+      paymentFee,
     };
     const resp = await createCollection({ authToken: String(auth), payload });
     if (resp.error)
