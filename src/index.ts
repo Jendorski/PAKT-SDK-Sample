@@ -10,7 +10,7 @@ import api from "./routes/index";
 import morganMiddleware from "./utils/morgan";
 import Utils from "./utils/response";
 
-//"file:../../PaktSDK",
+//"file:../../../Pakt/PaktSDK",,
 //"^0.1.33",
 const { success } = Utils;
 
