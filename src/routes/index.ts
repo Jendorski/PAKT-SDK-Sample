@@ -5,6 +5,7 @@ import authRouter from "./auth";
 import bookmarkRouter from "./bookmark";
 import chatRouter from "./chat";
 import collectionRouter from "./collection";
+import connectionFilterRouter from "./connection-filter";
 import fileRouter from "./file";
 import inviteRouter from "./invite";
 import notificationRouter from "./notifications";
@@ -26,6 +27,7 @@ router.use("/bookmark", bookmarkRouter);
 router.use("/notification", notificationRouter);
 router.use("/payment", paymentRouter);
 router.use("/withdrawal", withdrawalRouter);
+router.use("/conn", connectionFilterRouter);
 
 router.use("**", (req: Request, res: Response, next: NextFunction) => {
   return failed(
